@@ -819,26 +819,12 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
   );
 };
 
-// Custom Scroll Hook for Header Background
-const ScrollTriggerAppBar = ({ children }) => {
+// --- Main App Component ---
+export default function App() {
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 50,
   });
-
-  return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0,
-    style: {
-      backgroundColor: trigger ? 'rgba(255, 255, 255, 0.88)' : 'transparent',
-      backdropFilter: trigger ? 'blur(16px)' : 'none',
-      borderBottom: trigger ? '1px solid rgba(10, 126, 140, 0.1)' : '1px solid transparent',
-      transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
-    },
-  });
-};
-
-// --- Main App Component ---
-export default function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   
@@ -1213,99 +1199,136 @@ export default function App() {
       <CssBaseline />
       
       {/* AppBar Header */}
-      <ScrollTriggerAppBar>
-        <AppBar position="fixed">
-          <Container maxWidth="lg">
-            <Toolbar disableGutters sx={{ justifyContent: 'space-between', py: 1 }}>
+      <AppBar
+        position="fixed"
+        elevation={trigger ? 3 : 0}
+        sx={{
+          backgroundColor: trigger ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
+          backdropFilter: trigger ? 'blur(16px)' : 'none',
+          boxShadow: trigger ? '0 4px 20px rgba(10, 126, 140, 0.08)' : 'none',
+          transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+          overflow: 'visible',
+          borderBottom: 'none'
+        }}
+      >
+        <Container maxWidth="lg">
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between', py: 1 }}>
+            <Box
+              onClick={() => handleNavClick('home')}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                cursor: 'pointer',
+                '&:hover img': {
+                  transform: 'scale(1.08) rotate(3deg)',
+                  borderColor: '#054f59',
+                  boxShadow: '0 4px 12px rgba(10, 126, 140, 0.3)'
+                },
+                '&:hover .navbar-brand': {
+                  color: '#0a7e8c'
+                }
+              }}
+            >
               <Box
-                onClick={() => handleNavClick('home')}
+                component="img"
+                src="images/murali_profile.png"
+                alt="Murali Palanisamy Logo"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleOpenLightbox('images/murali_profile.png');
+                }}
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1.5,
-                  cursor: 'pointer',
-                  '&:hover img': {
-                    transform: 'scale(1.08) rotate(3deg)',
-                    borderColor: '#054f59',
-                    boxShadow: '0 4px 12px rgba(10, 126, 140, 0.3)'
-                  },
-                  '&:hover .navbar-brand': {
-                    color: '#0a7e8c'
-                  }
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  objectPosition: 'center top',
+                  border: '2px solid #0a7e8c',
+                  boxShadow: '0 2px 8px rgba(10, 126, 140, 0.2)',
+                  transition: 'all 0.3s ease-in-out',
+                  cursor: 'zoom-in'
+                }}
+              />
+              <Typography
+                variant="h6"
+                className="navbar-brand"
+                sx={{
+                  fontWeight: 500,
+                  fontSize: '28px',
+                  color: '#051d24',
+                  fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
+                  transition: 'all 0.3s ease-in-out',
+                  '& span': { color: '#0a7e8c', transition: 'all 0.3s ease-in-out' }
                 }}
               >
-                <Box
-                  component="img"
-                  src="images/murali_profile.png"
-                  alt="Murali Palanisamy Logo"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleOpenLightbox('images/murali_profile.png');
-                  }}
+                Murali <span>Palanisamy</span>
+              </Typography>
+            </Box>
+
+            {/* Desktop Nav Items */}
+            <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.id)}
                   sx={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                    border: '2px solid #0a7e8c',
-                    boxShadow: '0 2px 8px rgba(10, 126, 140, 0.2)',
-                    transition: 'all 0.3s ease-in-out',
-                    cursor: 'zoom-in'
-                  }}
-                />
-                <Typography
-                  variant="h6"
-                  className="navbar-brand"
-                  sx={{
-                    fontWeight: 500,
-                    fontSize: '28px',
-                    color: '#051d24',
-                    fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
-                    transition: 'all 0.3s ease-in-out',
-                    '& span': { color: '#0a7e8c', transition: 'all 0.3s ease-in-out' }
+                    color: 'rgba(5, 29, 36, 0.85)',
+                    fontSize: '15px',
+                    fontWeight: 600,
+                    px: 2,
+                    '&:hover': {
+                      color: '#0a7e8c',
+                      backgroundColor: 'rgba(10, 126, 140, 0.05)'
+                    }
                   }}
                 >
-                  Murali <span>Palanisamy</span>
-                </Typography>
-              </Box>
+                  {item.label}
+                </Button>
+              ))}
+            </Box>
 
-              {/* Desktop Nav Items */}
-              <Box sx={{ display: { xs: 'none', lg: 'flex' }, gap: 1 }}>
-                {navItems.map((item) => (
-                  <Button
-                    key={item.label}
-                    onClick={() => handleNavClick(item.id)}
-                    sx={{
-                      color: 'rgba(5, 29, 36, 0.85)',
-                      fontSize: '15px',
-                      fontWeight: 600,
-                      px: 2,
-                      '&:hover': {
-                        color: '#0a7e8c',
-                        backgroundColor: 'rgba(10, 126, 140, 0.05)'
-                      }
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </Box>
+            {/* Mobile Menu Icon */}
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ display: { lg: 'none' }, color: '#051d24' }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Toolbar>
+        </Container>
 
-              {/* Mobile Menu Icon */}
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ display: { lg: 'none' }, color: '#051d24' }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Toolbar>
-          </Container>
-        </AppBar>
-      </ScrollTriggerAppBar>
+        {/* Wavy bottom border for navbar */}
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: '-15px',
+            left: 0,
+            width: '100%',
+            height: '15px',
+            overflow: 'hidden',
+            lineHeight: 0,
+            pointerEvents: 'none',
+            transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+            opacity: trigger ? 1 : 0,
+            transform: trigger ? 'translateY(0)' : 'translateY(-5px)',
+            '& svg': {
+              width: '100%',
+              height: '15px',
+            }
+          }}
+        >
+          <svg viewBox="0 0 1440 20" preserveAspectRatio="none">
+            <path
+              fill="rgba(255, 255, 255, 0.9)"
+              d="M0,0L1440,0L1440,10C1360,18,1200,18,1080,14C960,10,800,2,680,4C560,6,400,18,280,18C160,18,80,6,0,6Z"
+            />
+          </svg>
+        </Box>
+      </AppBar>
 
       {/* Mobile Drawer */}
       <Drawer
@@ -1794,28 +1817,150 @@ export default function App() {
                 border: '1px solid rgba(10, 126, 140, 0.15)',
                 boxShadow: '0 15px 40px rgba(10, 126, 140, 0.06)',
                 borderRadius: '24px',
-                overflow: 'hidden',
-                width: '100%'
+                overflow: 'visible',
+                width: '100%',
+                position: 'relative',
+                transition: 'all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                '&:hover': {
+                  transform: 'translateY(-10px) scale(1.01) rotate(0.5deg)',
+                  boxShadow: '0 30px 60px rgba(10, 126, 140, 0.15)',
+                  borderColor: 'rgba(10, 126, 140, 0.3)',
+                }
               }}
             >
+              {/* Premium Certification Seal Badge */}
               <Box
-                component="img"
-                src="images/UC-550a5ca4-33a5-488c-bf62-2fe9e0a8e9df.jpg"
-                alt="Udemy Python Pro Certificate"
                 sx={{
-                  width: '100%',
-                  height: 'auto',
-                  borderBottom: '1px solid rgba(10, 126, 140, 0.12)',
-                  display: 'block'
+                  position: 'absolute',
+                  top: '-20px',
+                  right: '-10px',
+                  width: '70px',
+                  height: '70px',
+                  zIndex: 10,
+                  backgroundColor: '#ffffff',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 8px 24px rgba(10, 126, 140, 0.2)',
+                  border: '2px solid #0a7e8c',
+                  animation: 'floatBadge 4s ease-in-out infinite',
+                  pointerEvents: 'none',
+                  '@keyframes floatBadge': {
+                    '0%, 100%': { transform: 'translateY(0) rotate(0deg)' },
+                    '50%': { transform: 'translateY(-6px) rotate(10deg)' },
+                  }
                 }}
-              />
+              >
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2L14.39 5.57L18.5 4.91L17.84 9.02L21.41 11.41L17.84 13.8L18.5 17.91L14.39 17.25L12 20.82L9.61 17.25L5.5 17.91L6.16 13.8L2.59 11.41L6.16 9.02L5.5 4.91L9.61 5.57L12 2Z" fill="#0a7e8c" />
+                  <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM10.5 14.5L8 12L9.41 10.59L10.5 11.67L14.59 7.58L16 9L10.5 14.5Z" fill="#ffffff" />
+                </svg>
+              </Box>
+
+              {/* Certificate Image Container with Hover Spotlight Overlay */}
+              <Box
+                onClick={() => handleOpenLightbox('images/UC-550a5ca4-33a5-488c-bf62-2fe9e0a8e9df.jpg')}
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  cursor: 'zoom-in',
+                  overflow: 'hidden',
+                  borderTopLeftRadius: '24px',
+                  borderTopRightRadius: '24px',
+                  borderBottom: '1px solid rgba(10, 126, 140, 0.12)',
+                  '&:hover .spotlight-overlay': {
+                    opacity: 1
+                  },
+                  '&:hover img': {
+                    transform: 'scale(1.03)',
+                  }
+                }}
+              >
+                <Box
+                  component="img"
+                  src="images/UC-550a5ca4-33a5-488c-bf62-2fe9e0a8e9df.jpg"
+                  alt="Udemy Python Pro Certificate"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    transition: 'transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                  }}
+                />
+                
+                <Box
+                  className="spotlight-overlay"
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(5, 29, 36, 0.65)',
+                    backdropFilter: 'blur(4px)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                    color: '#ffffff',
+                    gap: 1
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: '60px',
+                      height: '60px',
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(10, 126, 140, 0.9)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 8px 24px rgba(10, 126, 140, 0.4)',
+                      transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                      transform: 'scale(0.9)',
+                      '.spotlight-overlay:hover &': {
+                        transform: 'scale(1)'
+                      }
+                    }}
+                  >
+                    <i className="fa-solid fa-magnifying-glass-plus" style={{ fontSize: '24px' }}></i>
+                  </Box>
+                  <Typography variant="body2" sx={{ fontWeight: 600, letterSpacing: '0.5px' }}>
+                    Click to View Full Size
+                  </Typography>
+                </Box>
+              </Box>
+
               <CardContent sx={{ p: { xs: 4, md: 5 }, textAlign: 'center' }}>
-                <Typography variant="h4" sx={{ fontWeight: 700, mb: 1.5, fontSize: { xs: '22px', md: '28px' }, color: '#051d24' }}>
+                <Typography variant="h4" sx={{ fontWeight: 800, mb: 1, fontSize: { xs: '22px', md: '28px' }, color: '#051d24' }}>
                   Python Pro Certificate
                 </Typography>
-                <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 4, fontWeight: 500 }}>
+                <Typography variant="subtitle1" sx={{ color: 'text.secondary', mb: 3, fontWeight: 500 }}>
                   Issued by Udemy on April 2025
                 </Typography>
+
+                {/* Skills Tags inside Certificate Card */}
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1, mb: 4 }}>
+                  {['Python OOP', 'Data Structures', 'Web Scraping', 'File Handling', 'APIs', 'Algorithmic Logic'].map((skill) => (
+                    <Chip
+                      key={skill}
+                      label={skill}
+                      size="small"
+                      sx={{
+                        backgroundColor: 'rgba(10, 126, 140, 0.05)',
+                        color: '#0a7e8c',
+                        fontWeight: 650,
+                        border: '1px solid rgba(10, 126, 140, 0.12)',
+                        borderRadius: '6px',
+                        fontSize: '12px'
+                      }}
+                    />
+                  ))}
+                </Box>
+
                 <Button
                   component="a"
                   href="https://www.udemy.com/certificate/UC-550a5ca4-33a5-488c-bf62-2fe9e0a8e9df/"
@@ -1828,10 +1973,14 @@ export default function App() {
                     py: 1.8,
                     fontWeight: 700,
                     fontSize: '15px',
-                    boxShadow: '0 4px 15px rgba(10, 126, 140, 0.2)',
+                    borderRadius: '30px',
+                    background: 'linear-gradient(135deg, #0a7e8c 0%, #054f59 100%)',
+                    boxShadow: '0 4px 15px rgba(10, 126, 140, 0.25)',
+                    transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                     '&:hover': {
-                      boxShadow: '0 6px 25px rgba(10, 126, 140, 0.35)',
-                      backgroundColor: '#075b66'
+                      background: 'linear-gradient(135deg, #0d9cb0 0%, #076d7b 100%)',
+                      boxShadow: '0 8px 25px rgba(10, 126, 140, 0.4)',
+                      transform: 'translateY(-2px)'
                     }
                   }}
                 >
@@ -2247,17 +2396,36 @@ export default function App() {
                               display: 'flex',
                               alignItems: 'center',
                               gap: 2,
-                              border: sendMethod === 'gmail' ? '2.5px solid #0a7e8c' : '1px solid rgba(10, 126, 140, 0.15)',
-                              backgroundColor: sendMethod === 'gmail' ? 'rgba(10, 126, 140, 0.04)' : 'rgba(255, 255, 255, 0.5)',
-                              boxShadow: sendMethod === 'gmail' ? '0 8px 25px rgba(10, 126, 140, 0.08)' : 'none',
-                              transition: 'all 0.25s ease',
+                              border: sendMethod === 'gmail' ? '2.5px solid #ea4335' : '1px solid rgba(234, 67, 53, 0.2)',
+                              backgroundColor: sendMethod === 'gmail' ? 'rgba(234, 67, 53, 0.04)' : 'rgba(255, 255, 255, 0.5)',
+                              boxShadow: sendMethod === 'gmail' ? '0 8px 25px rgba(234, 67, 53, 0.12)' : 'none',
+                              transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
                               '&:hover': {
-                                borderColor: '#0a7e8c',
-                                backgroundColor: 'rgba(10, 126, 140, 0.02)'
+                                transform: 'translateY(-2px) scale(1.02)',
+                                borderColor: '#ea4335',
+                                backgroundColor: 'rgba(234, 67, 53, 0.02)',
+                                boxShadow: '0 6px 20px rgba(234, 67, 53, 0.08)',
+                                '& .send-method-icon': {
+                                  transform: 'scale(1.15) rotate(5deg)',
+                                  backgroundColor: 'rgba(234, 67, 53, 0.15)',
+                                }
                               }
                             }}
                           >
-                            <Box sx={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: sendMethod === 'gmail' ? 'rgba(10, 126, 140, 0.1)' : 'rgba(10, 126, 140, 0.05)', borderRadius: '10px', color: '#0a7e8c' }}>
+                            <Box
+                              className="send-method-icon"
+                              sx={{
+                                width: 40,
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: sendMethod === 'gmail' ? 'rgba(234, 67, 53, 0.12)' : 'rgba(234, 67, 53, 0.06)',
+                                borderRadius: '10px',
+                                color: '#ea4335',
+                                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                              }}
+                            >
                               <i className="fa-brands fa-google" style={{ fontSize: '18px' }} />
                             </Box>
                             <Box>
@@ -2282,17 +2450,36 @@ export default function App() {
                               display: 'flex',
                               alignItems: 'center',
                               gap: 2,
-                              border: sendMethod === 'mailto' ? '2.5px solid #0a7e8c' : '1px solid rgba(10, 126, 140, 0.15)',
-                              backgroundColor: sendMethod === 'mailto' ? 'rgba(10, 126, 140, 0.04)' : 'rgba(255, 255, 255, 0.5)',
-                              boxShadow: sendMethod === 'mailto' ? '0 8px 25px rgba(10, 126, 140, 0.08)' : 'none',
-                              transition: 'all 0.25s ease',
+                              border: sendMethod === 'mailto' ? '2.5px solid #1a73e8' : '1px solid rgba(26, 115, 232, 0.2)',
+                              backgroundColor: sendMethod === 'mailto' ? 'rgba(26, 115, 232, 0.04)' : 'rgba(255, 255, 255, 0.5)',
+                              boxShadow: sendMethod === 'mailto' ? '0 8px 25px rgba(26, 115, 232, 0.12)' : 'none',
+                              transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
                               '&:hover': {
-                                borderColor: '#0a7e8c',
-                                backgroundColor: 'rgba(10, 126, 140, 0.02)'
+                                transform: 'translateY(-2px) scale(1.02)',
+                                borderColor: '#1a73e8',
+                                backgroundColor: 'rgba(26, 115, 232, 0.02)',
+                                boxShadow: '0 6px 20px rgba(26, 115, 232, 0.08)',
+                                '& .send-method-icon': {
+                                  transform: 'scale(1.15) rotate(-5deg)',
+                                  backgroundColor: 'rgba(26, 115, 232, 0.15)',
+                                }
                               }
                             }}
                           >
-                            <Box sx={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: sendMethod === 'mailto' ? 'rgba(10, 126, 140, 0.1)' : 'rgba(10, 126, 140, 0.05)', borderRadius: '10px', color: '#0a7e8c' }}>
+                            <Box
+                              className="send-method-icon"
+                              sx={{
+                                width: 40,
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                backgroundColor: sendMethod === 'mailto' ? 'rgba(26, 115, 232, 0.12)' : 'rgba(26, 115, 232, 0.06)',
+                                borderRadius: '10px',
+                                color: '#1a73e8',
+                                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                              }}
+                            >
                               <EmailIcon sx={{ fontSize: '20px' }} />
                             </Box>
                             <Box>
@@ -2343,24 +2530,46 @@ export default function App() {
                         p: 3,
                         borderRadius: '20px',
                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
-                        boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
+                        border: '1px solid rgba(230, 81, 0, 0.15)',
+                        boxShadow: '0 8px 30px rgba(230, 81, 0, 0.02)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                         '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 12px 35px rgba(10, 126, 140, 0.1)',
-                          borderColor: '#0a7e8c'
+                          transform: 'translateY(-8px) scale(1.03)',
+                          boxShadow: '0 15px 35px rgba(230, 81, 0, 0.12)',
+                          borderColor: '#e65100',
+                          '& .contact-icon-box': {
+                            transform: 'scale(1.15) translateY(-2px)',
+                            boxShadow: '0 4px 12px rgba(230, 81, 0, 0.2)',
+                            backgroundColor: '#e65100',
+                            color: '#ffffff'
+                          }
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
-                        <RoomIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
+                      <Box
+                        className="contact-icon-box"
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          minWidth: 48,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(230, 81, 0, 0.05)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(230, 81, 0, 0.15)',
+                          mb: 2,
+                          color: '#e65100',
+                          transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                        }}
+                      >
+                        <RoomIcon sx={{ fontSize: '24px' }} />
                       </Box>
                       <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
@@ -2380,30 +2589,52 @@ export default function App() {
                         p: 3,
                         borderRadius: '20px',
                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
-                        boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
+                        border: '1px solid rgba(46, 125, 50, 0.15)',
+                        boxShadow: '0 8px 30px rgba(46, 125, 50, 0.02)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                         '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 12px 35px rgba(10, 126, 140, 0.1)',
-                          borderColor: '#0a7e8c'
+                          transform: 'translateY(-8px) scale(1.03)',
+                          boxShadow: '0 15px 35px rgba(46, 125, 50, 0.12)',
+                          borderColor: '#2e7d32',
+                          '& .contact-icon-box': {
+                            transform: 'scale(1.15) translateY(-2px)',
+                            boxShadow: '0 4px 12px rgba(46, 125, 50, 0.2)',
+                            backgroundColor: '#2e7d32',
+                            color: '#ffffff'
+                          }
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
-                        <PhoneIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
+                      <Box
+                        className="contact-icon-box"
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          minWidth: 48,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(46, 125, 50, 0.05)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(46, 125, 50, 0.15)',
+                          mb: 2,
+                          color: '#2e7d32',
+                          transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                        }}
+                      >
+                        <PhoneIcon sx={{ fontSize: '24px' }} />
                       </Box>
                       <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Phone
                         </Typography>
-                        <Typography variant="body2" component="a" href="tel:+919361659922" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
+                        <Typography variant="body2" component="a" href="tel:+919361659922" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', transition: 'color 0.3s', '&:hover': { color: '#2e7d32' } }}>
                           +91 93616 59922
                         </Typography>
                       </Box>
@@ -2417,30 +2648,52 @@ export default function App() {
                         p: 3,
                         borderRadius: '20px',
                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
-                        boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
+                        border: '1px solid rgba(198, 40, 40, 0.15)',
+                        boxShadow: '0 8px 30px rgba(198, 40, 40, 0.02)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                         '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 12px 35px rgba(10, 126, 140, 0.1)',
-                          borderColor: '#0a7e8c'
+                          transform: 'translateY(-8px) scale(1.03)',
+                          boxShadow: '0 15px 35px rgba(198, 40, 40, 0.12)',
+                          borderColor: '#c62828',
+                          '& .contact-icon-box': {
+                            transform: 'scale(1.15) translateY(-2px)',
+                            boxShadow: '0 4px 12px rgba(198, 40, 40, 0.2)',
+                            backgroundColor: '#c62828',
+                            color: '#ffffff'
+                          }
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
-                        <EmailIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
+                      <Box
+                        className="contact-icon-box"
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          minWidth: 48,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(198, 40, 40, 0.05)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(198, 40, 40, 0.15)',
+                          mb: 2,
+                          color: '#c62828',
+                          transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                        }}
+                      >
+                        <EmailIcon sx={{ fontSize: '24px' }} />
                       </Box>
                       <Box sx={{ width: '100%', overflow: 'hidden' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Email
                         </Typography>
-                        <Typography variant="body2" component="a" href="mailto:muralip.software.engineer@gmail.com" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '11px', textDecoration: 'none', display: 'block', wordBreak: 'break-all', '&:hover': { color: '#0a7e8c' } }}>
+                        <Typography variant="body2" component="a" href="mailto:muralip.software.engineer@gmail.com" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '11px', textDecoration: 'none', display: 'block', wordBreak: 'break-all', transition: 'color 0.3s', '&:hover': { color: '#c62828' } }}>
                           muralip.software.engineer@gmail.com
                         </Typography>
                       </Box>
@@ -2454,30 +2707,52 @@ export default function App() {
                         p: 3,
                         borderRadius: '20px',
                         backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
-                        boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
+                        border: '1px solid rgba(21, 101, 192, 0.15)',
+                        boxShadow: '0 8px 30px rgba(21, 101, 192, 0.02)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         textAlign: 'center',
                         justifyContent: 'center',
                         height: '100%',
-                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                         '&:hover': {
-                          transform: 'translateY(-5px)',
-                          boxShadow: '0 12px 35px rgba(10, 126, 140, 0.1)',
-                          borderColor: '#0a7e8c'
+                          transform: 'translateY(-8px) scale(1.03)',
+                          boxShadow: '0 15px 35px rgba(21, 101, 192, 0.12)',
+                          borderColor: '#1565c0',
+                          '& .contact-icon-box': {
+                            transform: 'scale(1.15) translateY(-2px)',
+                            boxShadow: '0 4px 12px rgba(21, 101, 192, 0.2)',
+                            backgroundColor: '#1565c0',
+                            color: '#ffffff'
+                          }
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
-                        <OpenInNewIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
+                      <Box
+                        className="contact-icon-box"
+                        sx={{
+                          width: 48,
+                          height: 48,
+                          minWidth: 48,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'rgba(21, 101, 192, 0.05)',
+                          borderRadius: '12px',
+                          border: '1px solid rgba(21, 101, 192, 0.15)',
+                          mb: 2,
+                          color: '#1565c0',
+                          transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                        }}
+                      >
+                        <OpenInNewIcon sx={{ fontSize: '24px' }} />
                       </Box>
                       <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Website
                         </Typography>
-                        <Typography variant="body2" component="a" href="https://muralisoftware.github.io/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
+                        <Typography variant="body2" component="a" href="https://muralisoftware.github.io/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', transition: 'color 0.3s', '&:hover': { color: '#1565c0' } }}>
                           muralisoftware.github.io
                         </Typography>
                       </Box>
@@ -2490,8 +2765,49 @@ export default function App() {
         </Container>
       </Box>
 
+      {/* Footer Wave Divider */}
+      <Box
+        sx={{
+          width: '100%',
+          overflow: 'hidden',
+          lineHeight: 0,
+          backgroundColor: '#f3f8f9',
+          position: 'relative',
+          zIndex: 3
+        }}
+      >
+        <svg
+          viewBox="0 0 1440 200"
+          preserveAspectRatio="none"
+          style={{
+            position: 'relative',
+            display: 'block',
+            width: '100%',
+            height: '80px'
+          }}
+        >
+          {/* Wave 1 (Deepest) */}
+          <path
+            fill="#0a7e8c"
+            opacity="0.08"
+            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,106.7C960,117,1056,139,1152,144C1248,149,1344,139,1392,133.3L1440,128L1440,200L1392,200C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z"
+          />
+          {/* Wave 2 (Middle) */}
+          <path
+            fill="#0a7e8c"
+            opacity="0.18"
+            d="M0,128L48,122.7C96,117,192,107,288,112C384,117,480,139,576,144C672,149,768,139,864,122.7C960,107,1056,85,1152,90.7C1248,96,1344,128,1392,144L1440,160L1440,200L1392,200C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z"
+          />
+          {/* Wave 3 (Foreground/Solid) */}
+          <path
+            fill="#ffffff"
+            d="M0,160L48,154.7C96,149,192,139,288,144C384,149,480,171,576,170.7C672,171,768,149,864,138.7C960,128,1056,128,1152,133.3C1248,139,1344,149,1392,154.7L1440,160L1440,200L1392,200C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z"
+          />
+        </svg>
+      </Box>
+
       {/* Footer */}
-      <Box sx={{ py: 8, backgroundColor: '#ffffff', borderTop: '1px solid rgba(10, 126, 140, 0.12)', position: 'relative', zIndex: 3 }}>
+      <Box sx={{ py: 8, backgroundColor: '#ffffff', position: 'relative', zIndex: 3 }}>
         <Container maxWidth="lg">
           <Grid container spacing={4} justifyContent="space-between">
             {/* Nav Links Column */}
