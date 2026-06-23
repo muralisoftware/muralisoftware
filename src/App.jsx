@@ -2210,8 +2210,8 @@ export default function App() {
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Website
                         </Typography>
-                        <Typography variant="body2" component="a" href="https://muralisoftware.github.io/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
-                          muralisoftware.github.io
+                        <Typography variant="body2" component="a" href="https://muralisoftware.vercel.app/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
+                          muralisoftware.vercel.app
                         </Typography>
                       </Box>
                     </Paper>
@@ -2370,7 +2370,7 @@ export default function App() {
           <Box sx={{ borderTop: '1px solid rgba(10, 126, 140, 0.08)', mt: 6, pt: 4, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'rgba(5, 29, 36, 0.5)', textAlign: 'center' }}>
               Copyright © {new Date().getFullYear()}{' '}
-              <Link href="https://muralisoftware.github.io/" target="_blank" sx={{ color: '#0a7e8c', textDecoration: 'none', '&:hover': { color: '#054f59' } }}>
+              <Link href="https://muralisoftware.vercel.app/" target="_blank" sx={{ color: '#0a7e8c', textDecoration: 'none', '&:hover': { color: '#054f59' } }}>
                 muralisoftware
               </Link>. All rights reserved.
             </Typography>
