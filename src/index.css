@@ -1,0 +1,226 @@
+/* Custom Premium Light Stylesheet for Murali Software Portfolio */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f3f8f9;
+  color: #051d24;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Custom Scrollbar for Light Theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #edf3f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #a8c5cc;
+  border-radius: 5px;
+  border: 2px solid #edf3f5;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0a7e8c;
+}
+
+/* Neural Network Background Canvas */
+#neuralCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+}
+
+/* Selection Color */
+::selection {
+  background: rgba(10, 126, 140, 0.15);
+  color: #051d24;
+}
+
+/* Floating Social Media Buttons */
+.social-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  width: 50px;
+  height: 50px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(10, 126, 140, 0.2);
+}
+
+.social-btn i {
+  font-size: 22px;
+}
+
+.social-btn span {
+  margin-left: 0px;
+  opacity: 0;
+  width: 0;
+  font-size: 15px;
+  font-weight: 600;
+  transition: width 0.3s ease, opacity 0.2s ease, margin-left 0.3s ease;
+}
+
+.social-btn:hover {
+  width: 150px;
+  justify-content: flex-start;
+  padding-left: 15px;
+}
+
+.social-btn:hover span {
+  opacity: 1;
+  width: auto;
+  margin-left: 10px;
+}
+
+.whatsapp {
+  background-color: #25D366;
+}
+.whatsapp:hover {
+  background-color: #20ba56;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+}
+
+.instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+}
+.instagram:hover {
+  box-shadow: 0 6px 20px rgba(214, 36, 159, 0.3);
+  filter: brightness(1.1);
+}
+
+/* Client Logo Marquee */
+.logo-scroll-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding: 30px 0;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(10, 126, 140, 0.08);
+  border-bottom: 1px solid rgba(10, 126, 140, 0.08);
+}
+
+.logo-scroll-wrapper {
+  display: flex;
+  width: max-content;
+  animation: scroll-logos 30s linear infinite;
+}
+
+.logo-scroll-wrapper:hover {
+  animation-play-state: paused;
+}
+
+.client-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  margin-right: 40px;
+  background: #ffffff;
+  border: 1px solid rgba(10, 126, 140, 0.06);
+  box-shadow: 0 4px 12px rgba(10, 126, 140, 0.03);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.client-logo-container:hover {
+  background: rgba(10, 126, 140, 0.02);
+  border-color: rgba(10, 126, 140, 0.25);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(10, 126, 140, 0.1);
+}
+
+.client-logo {
+  width: 120px;
+  height: 60px;
+  object-fit: contain;
+  filter: grayscale(1) contrast(1) brightness(0.9);
+  transition: all 0.3s ease;
+}
+
+.client-logo-container:hover .client-logo {
+  filter: grayscale(0) brightness(1);
+}
+
+/* Infinite animation for continuous scroll effect */
+@keyframes scroll-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Glassmorphism Classes for Light Theme */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(10, 126, 140, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(10, 126, 140, 0.08);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Custom glow element in Skill Card for Light Theme */
+.skill-card-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(10, 126, 140, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.glass-card:hover .skill-card-glow {
+  opacity: 1;
+}
+
+/* Projects Fade-in Scroll helper classes */
+.project-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.project-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
