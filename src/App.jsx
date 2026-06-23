@@ -461,7 +461,9 @@ const ScrollFadeIn = ({ children, delay = 0 }) => {
         transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
         transition: `opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) ${delay}s, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) ${delay}s`,
         width: '100%',
-        display: 'flex'
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
       }}
     >
       {children}
@@ -542,8 +544,28 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+    
     glow.style.left = `${x - 100}px`;
     glow.style.top = `${y - 100}px`;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * 12; // tilt max 12 degrees
+    const rotateY = -((x - centerX) / centerX) * 12;
+    
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    const glow = glowRef.current;
+    if (!card) return;
+    
+    card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+    if (glow) {
+      glow.style.left = '-200px';
+      glow.style.top = '-200px';
+    }
   };
 
   const rgbaColor08 = hexToRgba(color, 0.08);
@@ -555,6 +577,7 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
     <Card
       ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       className="glass-card"
       sx={{
         position: 'relative',
@@ -568,14 +591,17 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
         background: 'linear-gradient(135deg, #ffffff, #e6f4f6)',
         border: `1px solid ${rgbaColor2}`,
         boxShadow: `0 8px 30px ${hexToRgba(color, 0.05)}`,
-        transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease, box-shadow 0.4s ease',
+        transition: 'transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease, box-shadow 0.4s ease',
+        transformStyle: 'preserve-3d',
         color: '#051d24',
         '&:hover': {
-          transform: 'translateY(-8px)',
           borderColor: rgbaColor5,
           boxShadow: `0 20px 45px ${rgbaColor12}`,
           '& .skill-icon-container': {
-            transform: 'scale(1.1) rotate(-5deg)',
+            transform: 'scale(1.1) rotate(-5deg) translateZ(30px)',
+          },
+          '& .skill-title': {
+            transform: 'translateZ(20px)',
           }
         }
       }}
@@ -589,8 +615,8 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
           background: `radial-gradient(circle, ${hexToRgba(color, 0.22)} 0%, rgba(255, 255, 255, 0) 70%)`
         }} 
       />
-      <Box sx={{ zIndex: 1, position: 'relative' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, mb: 3 }}>
+      <Box sx={{ zIndex: 1, position: 'relative', transformStyle: 'preserve-3d' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5, mb: 3, transformStyle: 'preserve-3d' }}>
           <Box
             className="skill-icon-container"
             sx={{
@@ -602,12 +628,13 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '30px',
+              color: '#ffffff',
               transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
             }}
           >
             {icon}
           </Box>
-          <Typography className="skill-title" variant="h5" sx={{ fontWeight: 700, letterSpacing: '-0.5px' }}>
+          <Typography className="skill-title" variant="h5" sx={{ fontWeight: 700, letterSpacing: '-0.5px', transition: 'transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}>
             {title}
           </Typography>
         </Box>
@@ -652,13 +679,52 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
   );
 };
 
+// Embedded SVG wave element for cards
+const CardWaveBackground = ({ color, isEven }) => {
+  const path1 = "M0,192L48,202.7C96,213,192,235,288,229.3C384,224,480,192,576,181.3C672,171,768,181,864,186.7C960,192,1056,192,1152,181.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z";
+  const path2 = "M0,128L48,138.7C96,149,192,171,288,186.7C384,203,480,213,576,197.3C672,181,768,139,864,128C960,117,1056,139,1152,149.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z";
+
+  return (
+    <Box
+      className="card-wave-bg"
+      sx={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '100px',
+        width: '100%',
+        overflow: 'hidden',
+        pointerEvents: 'none',
+        zIndex: 0,
+        opacity: 0.08,
+        transition: 'all 0.4s ease-in-out',
+        '& svg': {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '100px'
+        }
+      }}
+    >
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path fill={color} d={isEven ? path1 : path2} />
+      </svg>
+    </Box>
+  );
+};
+
 // Premium Project Card component
-const ProjectCard = ({ title, description, features, tech, getTechColor }) => {
+const ProjectCard = ({ title, description, features, tech, getTechColor, index = 0 }) => {
+  const isEven = index % 2 === 0;
+  const primaryColor = tech && tech.length > 0 ? getTechColor(tech[0]) : '#0a7e8c';
+
   return (
     <Card
       className="glass-card"
       sx={{
-        borderRadius: '24px',
+        borderRadius: isEven ? '24px 60px 24px 60px' : '60px 24px 60px 24px',
         background: 'linear-gradient(to bottom, #ffffff, #eef7f8, #ffffff)',
         border: '1px solid rgba(10, 126, 140, 0.16)',
         color: '#051d24',
@@ -667,6 +733,7 @@ const ProjectCard = ({ title, description, features, tech, getTechColor }) => {
         width: '100%',
         mb: 4,
         boxShadow: '0 10px 40px rgba(10, 126, 140, 0.05)',
+        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -674,22 +741,29 @@ const ProjectCard = ({ title, description, features, tech, getTechColor }) => {
           left: 0,
           right: 0,
           height: '4px',
-          background: 'linear-gradient(90deg, #0a7e8c, #054f59, #0a7e8c)',
+          background: `linear-gradient(90deg, ${primaryColor}, #0a7e8c, ${primaryColor})`,
           transform: 'scaleX(0)',
           transformOrigin: 'left',
           transition: 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
         },
         '&:hover': {
-          transform: 'translateY(-8px)',
-          borderColor: 'rgba(10, 126, 140, 0.5)',
-          boxShadow: '0 20px 50px rgba(10, 126, 140, 0.12)',
+          transform: 'translateY(-8px) scale(1.005)',
+          borderColor: primaryColor,
+          borderRadius: isEven ? '32px 80px 32px 80px' : '80px 32px 80px 32px',
+          boxShadow: `0 20px 50px ${hexToRgba(primaryColor, 0.12)}`,
           '&::before': {
             transform: 'scaleX(1)',
+          },
+          '& .card-wave-bg': {
+            opacity: 0.16,
+            height: '120px'
           }
         }
       }}
     >
-      <Grid container spacing={4} sx={{ padding: { xs: 4, md: 5 } }}>
+      <CardWaveBackground color={primaryColor} isEven={isEven} />
+      
+      <Grid container spacing={4} sx={{ padding: { xs: 4, md: 5 }, position: 'relative', zIndex: 1 }}>
         <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
           <Typography className="project-title" variant="h4" sx={{ fontWeight: 700, fontSize: { xs: '24px', md: '30px' } }}>
             {title}
@@ -771,6 +845,9 @@ export default function App() {
   // Lightbox picture viewer state
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImg, setLightboxImg] = useState('');
+  
+  // Email sending method state ('gmail' or 'mailto')
+  const [sendMethod, setSendMethod] = useState('gmail');
 
   const handleOpenLightbox = (imgSrc) => {
     setLightboxImg(imgSrc);
@@ -807,9 +884,15 @@ export default function App() {
     }
 
     const emailAddress = "muralip.software.engineer@gmail.com";
-    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${encodeURIComponent(subject)}&body=Name: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
-    
-    window.open(gmailLink, "_blank");
+    const bodyContent = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+
+    if (sendMethod === 'gmail') {
+      const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+      window.open(gmailLink, "_blank");
+    } else {
+      const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyContent)}`;
+      window.location.href = mailtoLink;
+    }
   };
 
   // Dynamic Technology Color mapping helper
@@ -1175,10 +1258,10 @@ export default function App() {
                   variant="h6"
                   className="navbar-brand"
                   sx={{
-                    fontWeight: 800,
-                    fontSize: '22px',
+                    fontWeight: 500,
+                    fontSize: '28px',
                     color: '#051d24',
-                    letterSpacing: '-0.5px',
+                    fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
                     transition: 'all 0.3s ease-in-out',
                     '& span': { color: '#0a7e8c', transition: 'all 0.3s ease-in-out' }
                   }}
@@ -1270,11 +1353,10 @@ export default function App() {
             <Typography
               variant="h6"
               sx={{
-                fontWeight: 800,
-                fontSize: '18px',
+                fontWeight: 500,
+                fontSize: '24px',
                 color: '#051d24',
-                letterSpacing: '-0.5px',
-                fontFamily: "'Sora', -apple-system, sans-serif",
+                fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
                 '& span': { color: '#0a7e8c' }
               }}
             >
@@ -1370,17 +1452,44 @@ export default function App() {
               textShadow: '0 2px 10px rgba(10, 126, 140, 0.05)'
             }}
           >
-            Hello! I'm <Box component="span" sx={{ color: '#0a7e8c', background: 'linear-gradient(120deg, #0a7e8c 0%, #054f59 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Murali Palanisamy</Box>
+            Hello! I'm{' '}
+            <Box
+              component="span"
+              sx={{
+                background: 'linear-gradient(120deg, #0a7e8c 0%, #054f59 30%, #777BB4 50%, #c21d80 70%, #0a7e8c 100%)',
+                backgroundSize: '200% auto',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'gradientShift 6s linear infinite, nameFloat 4s ease-in-out infinite',
+                display: 'inline-block',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                cursor: 'pointer',
+                '&:hover': {
+                  transform: 'scale(1.05) rotate(1deg)',
+                  textShadow: '0 0 30px rgba(10, 126, 140, 0.35)',
+                }
+              }}
+            >
+              Murali Palanisamy
+            </Box>
           </Typography>
           
           <Typography
             variant="h4"
             sx={{
-              fontSize: { xs: '18px', sm: '24px', md: '28px' },
-              color: 'text.secondary',
+              fontSize: { xs: '16px', sm: '22px', md: '26px' },
+              color: '#0a7e8c',
               mb: 3,
-              fontWeight: 500,
-              letterSpacing: '-0.5px'
+              fontWeight: 600,
+              fontFamily: "'Fira Code', 'Space Mono', 'Courier New', monospace",
+              letterSpacing: '-0.5px',
+              display: 'inline-block',
+              borderRight: '3px solid transparent',
+              pr: '8px',
+              animation: 'slideUpFade 0.8s ease-out, blink 0.75s step-end infinite',
+              mx: 'auto',
+              whiteSpace: 'normal',
+              textAlign: 'center'
             }}
           >
             Software Engineer | Full Stack Developer | Mobile App Developer
@@ -1403,22 +1512,23 @@ export default function App() {
             component="a"
             href="static/files/cv.pdf"
             download="MuraliPalanisamy_CV.pdf"
-            variant="outlined"
+            variant="contained"
             sx={{
-              borderColor: '#0a7e8c',
-              color: '#0a7e8c',
+              background: 'linear-gradient(135deg, #0a7e8c 0%, #054f59 100%)',
+              color: '#ffffff',
               fontSize: '16px',
               fontWeight: 700,
               px: 4,
               py: 1.5,
-              borderWidth: '2px',
+              borderRadius: '30px',
+              border: 'none',
+              boxShadow: '0 4px 15px rgba(10, 126, 140, 0.3)',
+              animation: 'buttonPulse 2s infinite',
+              transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
               '&:hover': {
-                borderWidth: '2px',
-                borderColor: '#0a7e8c',
-                backgroundColor: '#0a7e8c',
-                color: '#ffffff',
-                transform: 'scale(1.05) rotateX(10deg)',
-                boxShadow: '0 10px 30px rgba(10, 126, 140, 0.15)'
+                background: 'linear-gradient(135deg, #0d9cb0 0%, #076d7b 100%)',
+                transform: 'translateY(-3px) scale(1.05)',
+                boxShadow: '0 12px 25px rgba(10, 126, 140, 0.45)',
               }
             }}
           >
@@ -1746,58 +1856,129 @@ export default function App() {
           </Box>
 
           <Grid container spacing={4}>
-            {servicesData.map((service, idx) => (
-              <Grid item xs={12} sm={6} md={3} key={idx} sx={{ display: 'flex' }}>
-                <ScrollFadeIn delay={idx * 0.05}>
-                  <Card
-                    sx={{
-                      background: 'rgba(255, 255, 255, 0.75)',
-                      border: '1px solid rgba(10, 126, 140, 0.12)',
-                      padding: 4,
-                      borderRadius: '24px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      height: '100%',
-                      width: '100%',
-                      transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
-                      '&:hover': {
-                        transform: 'translateY(-6px)',
-                        borderColor: service.color,
-                        backgroundColor: '#ffffff',
-                        boxShadow: `0 12px 40px ${hexToRgba(service.color, 0.12)}`,
-                        '& .service-icon-box': {
-                          backgroundColor: hexToRgba(service.color, 0.1)
-                        }
-                      }
-                    }}
-                  >
-                    <Box
-                      className="service-icon-box"
+            {servicesData.map((service, idx) => {
+              const isEven = idx % 2 === 0;
+              return (
+                <Grid item xs={12} key={idx}>
+                  <ScrollFadeIn delay={idx * 0.05}>
+                    <Card
                       sx={{
-                        width: 60,
-                        height: 60,
-                        backgroundColor: hexToRgba(service.color, 0.06),
-                        borderRadius: '16px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mb: 3,
-                        color: service.color,
-                        transition: 'background-color 0.3s ease'
+                        background: 'rgba(255, 255, 255, 0.75)',
+                        border: '1px solid rgba(10, 126, 140, 0.12)',
+                        borderRadius: isEven ? '24px 60px 24px 60px' : '60px 24px 60px 24px',
+                        width: '100%',
+                        position: 'relative',
+                        overflow: 'hidden',
+                        boxShadow: '0 10px 40px rgba(10, 126, 140, 0.05)',
+                        transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '4px',
+                          background: `linear-gradient(90deg, ${service.color}, #0a7e8c, ${service.color})`,
+                          transform: 'scaleX(0)',
+                          transformOrigin: 'left',
+                          transition: 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                        },
+                        '&:hover': {
+                          transform: 'translateY(-8px) scale(1.005)',
+                          borderColor: service.color,
+                          borderRadius: isEven ? '32px 80px 32px 80px' : '80px 32px 80px 32px',
+                          boxShadow: `0 20px 50px ${hexToRgba(service.color, 0.12)}`,
+                          '&::before': {
+                            transform: 'scaleX(1)',
+                          },
+                          '& .service-icon-box': {
+                            backgroundColor: hexToRgba(service.color, 0.12),
+                            transform: 'rotate(8deg) scale(1.05)'
+                          },
+                          '& .card-wave-bg': {
+                            opacity: 0.16,
+                            height: '120px'
+                          }
+                        }
                       }}
                     >
-                      {service.icon}
-                    </Box>
-                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, color: '#051d24' }}>
-                      {service.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6, fontSize: '14px' }}>
-                      {service.description}
-                    </Typography>
-                  </Card>
-                </ScrollFadeIn>
-              </Grid>
-            ))}
+                      <CardWaveBackground color={service.color} isEven={isEven} />
+                      
+                      <Grid
+                        container
+                        spacing={4}
+                        flexDirection={isEven ? 'row' : { xs: 'row', md: 'row-reverse' }}
+                        sx={{ padding: { xs: 4, md: 5 }, position: 'relative', zIndex: 1, alignItems: 'center' }}
+                      >
+                        {/* Title & Icon Column */}
+                        <Grid
+                          item
+                          xs={12}
+                          md={4}
+                          sx={{
+                            display: 'flex',
+                            gap: 3,
+                            alignItems: 'center',
+                            flexDirection: isEven ? 'row' : { xs: 'row', md: 'row-reverse' },
+                            justifyContent: { xs: 'flex-start', md: isEven ? 'flex-start' : 'flex-end' }
+                          }}
+                        >
+                          <Box
+                            className="service-icon-box"
+                            sx={{
+                              width: 60,
+                              height: 60,
+                              minWidth: 60,
+                              backgroundColor: hexToRgba(service.color, 0.06),
+                              borderRadius: '16px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: service.color,
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            {service.icon}
+                          </Box>
+                          <Typography
+                            variant="h5"
+                            sx={{
+                              fontWeight: 800,
+                              color: '#051d24',
+                              fontSize: { xs: '20px', md: '22px' },
+                              textAlign: { xs: 'left', md: isEven ? 'left' : 'right' }
+                            }}
+                          >
+                            {service.title}
+                          </Typography>
+                        </Grid>
+
+                        {/* Description Column */}
+                        <Grid
+                          item
+                          xs={12}
+                          md={8}
+                          sx={{
+                            textAlign: { xs: 'left', md: isEven ? 'left' : 'right' }
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: '#425f65',
+                              lineHeight: 1.8,
+                              fontSize: { xs: '14px', md: '16px' }
+                            }}
+                          >
+                            {service.description}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  </ScrollFadeIn>
+                </Grid>
+              );
+            })}
           </Grid>
         </Container>
       </Box>
@@ -1905,6 +2086,7 @@ export default function App() {
                   features={project.features}
                   tech={project.tech}
                   getTechColor={getTechColor}
+                  index={idx}
                 />
               </ScrollFadeIn>
             ))}
@@ -2050,6 +2232,83 @@ export default function App() {
                       />
                     </Grid>
                     <Grid item xs={12}>
+                      <Typography variant="subtitle2" sx={{ color: '#425f65', fontWeight: 700, mb: 1.5, textTransform: 'uppercase', fontSize: '12px', letterSpacing: '0.5px' }}>
+                        Preferred Sending Method
+                      </Typography>
+                      <Grid container spacing={2}>
+                        {/* Gmail Card */}
+                        <Grid item xs={12} sm={6}>
+                          <Paper
+                            onClick={() => setSendMethod('gmail')}
+                            sx={{
+                              p: 2.5,
+                              borderRadius: '16px',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 2,
+                              border: sendMethod === 'gmail' ? '2.5px solid #0a7e8c' : '1px solid rgba(10, 126, 140, 0.15)',
+                              backgroundColor: sendMethod === 'gmail' ? 'rgba(10, 126, 140, 0.04)' : 'rgba(255, 255, 255, 0.5)',
+                              boxShadow: sendMethod === 'gmail' ? '0 8px 25px rgba(10, 126, 140, 0.08)' : 'none',
+                              transition: 'all 0.25s ease',
+                              '&:hover': {
+                                borderColor: '#0a7e8c',
+                                backgroundColor: 'rgba(10, 126, 140, 0.02)'
+                              }
+                            }}
+                          >
+                            <Box sx={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: sendMethod === 'gmail' ? 'rgba(10, 126, 140, 0.1)' : 'rgba(10, 126, 140, 0.05)', borderRadius: '10px', color: '#0a7e8c' }}>
+                              <i className="fa-brands fa-google" style={{ fontSize: '18px' }} />
+                            </Box>
+                            <Box>
+                              <Typography variant="body1" sx={{ fontWeight: 700, fontSize: '14px', color: '#051d24' }}>
+                                Gmail (Web)
+                              </Typography>
+                              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                Compose mail in web browser tab
+                              </Typography>
+                            </Box>
+                          </Paper>
+                        </Grid>
+
+                        {/* Mailto Card */}
+                        <Grid item xs={12} sm={6}>
+                          <Paper
+                            onClick={() => setSendMethod('mailto')}
+                            sx={{
+                              p: 2.5,
+                              borderRadius: '16px',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 2,
+                              border: sendMethod === 'mailto' ? '2.5px solid #0a7e8c' : '1px solid rgba(10, 126, 140, 0.15)',
+                              backgroundColor: sendMethod === 'mailto' ? 'rgba(10, 126, 140, 0.04)' : 'rgba(255, 255, 255, 0.5)',
+                              boxShadow: sendMethod === 'mailto' ? '0 8px 25px rgba(10, 126, 140, 0.08)' : 'none',
+                              transition: 'all 0.25s ease',
+                              '&:hover': {
+                                borderColor: '#0a7e8c',
+                                backgroundColor: 'rgba(10, 126, 140, 0.02)'
+                              }
+                            }}
+                          >
+                            <Box sx={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: sendMethod === 'mailto' ? 'rgba(10, 126, 140, 0.1)' : 'rgba(10, 126, 140, 0.05)', borderRadius: '10px', color: '#0a7e8c' }}>
+                              <EmailIcon sx={{ fontSize: '20px' }} />
+                            </Box>
+                            <Box>
+                              <Typography variant="body1" sx={{ fontWeight: 700, fontSize: '14px', color: '#051d24' }}>
+                                Mail Client
+                              </Typography>
+                              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                Open Outlook/Apple Mail app
+                              </Typography>
+                            </Box>
+                          </Paper>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+
+                    <Grid item xs={12}>
                       <Button
                         onClick={handleSendMessage}
                         variant="contained"
@@ -2087,8 +2346,10 @@ export default function App() {
                         border: '1px solid rgba(10, 126, 140, 0.12)',
                         boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
                         display: 'flex',
-                        gap: 2,
+                        flexDirection: 'column',
                         alignItems: 'center',
+                        textAlign: 'center',
+                        justifyContent: 'center',
                         height: '100%',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         '&:hover': {
@@ -2098,10 +2359,10 @@ export default function App() {
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)' }}>
+                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
                         <RoomIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
                       </Box>
-                      <Box>
+                      <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Address
                         </Typography>
@@ -2122,8 +2383,10 @@ export default function App() {
                         border: '1px solid rgba(10, 126, 140, 0.12)',
                         boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
                         display: 'flex',
-                        gap: 2,
+                        flexDirection: 'column',
                         alignItems: 'center',
+                        textAlign: 'center',
+                        justifyContent: 'center',
                         height: '100%',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         '&:hover': {
@@ -2133,10 +2396,10 @@ export default function App() {
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)' }}>
+                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
                         <PhoneIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
                       </Box>
-                      <Box>
+                      <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Phone
                         </Typography>
@@ -2157,8 +2420,10 @@ export default function App() {
                         border: '1px solid rgba(10, 126, 140, 0.12)',
                         boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
                         display: 'flex',
-                        gap: 2,
+                        flexDirection: 'column',
                         alignItems: 'center',
+                        textAlign: 'center',
+                        justifyContent: 'center',
                         height: '100%',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         '&:hover': {
@@ -2168,10 +2433,10 @@ export default function App() {
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)' }}>
+                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
                         <EmailIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
                       </Box>
-                      <Box sx={{ overflow: 'hidden' }}>
+                      <Box sx={{ width: '100%', overflow: 'hidden' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Email
                         </Typography>
@@ -2192,8 +2457,10 @@ export default function App() {
                         border: '1px solid rgba(10, 126, 140, 0.12)',
                         boxShadow: '0 8px 30px rgba(10, 126, 140, 0.03)',
                         display: 'flex',
-                        gap: 2,
+                        flexDirection: 'column',
                         alignItems: 'center',
+                        textAlign: 'center',
+                        justifyContent: 'center',
                         height: '100%',
                         transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         '&:hover': {
@@ -2203,15 +2470,15 @@ export default function App() {
                         }
                       }}
                     >
-                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)' }}>
+                      <Box sx={{ width: 48, height: 48, minWidth: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(10, 126, 140, 0.05)', borderRadius: '12px', border: '1px solid rgba(10, 126, 140, 0.15)', mb: 2 }}>
                         <OpenInNewIcon sx={{ color: '#0a7e8c', fontSize: '24px' }} />
                       </Box>
-                      <Box>
+                      <Box sx={{ width: '100%' }}>
                         <Typography variant="subtitle2" sx={{ color: 'text.secondary', fontWeight: 600, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                           Website
                         </Typography>
-                        <Typography variant="body2" component="a" href="https://muralisoftware.vercel.app/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
-                          muralisoftware.vercel.app
+                        <Typography variant="body2" component="a" href="https://muralisoftware.github.io/" sx={{ fontWeight: 700, mt: 0.5, color: '#051d24', fontSize: '13px', textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}>
+                          muralisoftware.github.io
                         </Typography>
                       </Box>
                     </Paper>
