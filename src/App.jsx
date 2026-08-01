@@ -52,18 +52,18 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#0a7e8c', // Primary Accent
+      main: '#0F2C59', // Primary Accent (Navy)
       contrastText: '#ffffff',
     },
     secondary: {
-      main: '#0a7e8c',
+      main: '#C59B27', // Secondary Accent (Gold)
     },
     background: {
-      default: '#f3f8f9', // Light Theme Background
+      default: '#f4f6f9', // Cool light default background // Light Theme Background
       paper: '#ffffff',
     },
     text: {
-      primary: '#051d24',
+      primary: '#0B1E36', // Deep navy text
       secondary: '#425f65',
     },
   },
@@ -223,12 +223,12 @@ const NeuralCanvas = ({ isPaused }) => {
           ctx.arc(px, py, 5 * pScale, 0, Math.PI * 2);
           
           const gradient = ctx.createRadialGradient(px, py, 0, px, py, 5 * pScale);
-          gradient.addColorStop(0, `rgba(10, 126, 140, ${1 - this.progress})`);
-          gradient.addColorStop(1, `rgba(10, 126, 140, ${(1 - this.progress) * 0.3})`);
+          gradient.addColorStop(0, `rgba(15, 44, 89, ${1 - this.progress})`);
+          gradient.addColorStop(1, `rgba(15, 44, 89, ${(1 - this.progress) * 0.3})`);
           ctx.fillStyle = gradient;
           
           ctx.shadowBlur = 15;
-          ctx.shadowColor = 'rgba(10, 126, 140, 0.4)';
+          ctx.shadowColor = 'rgba(15, 44, 89, 0.4)';
           ctx.fill();
           ctx.shadowBlur = 0;
         }
@@ -319,7 +319,7 @@ const NeuralCanvas = ({ isPaused }) => {
               ctx.beginPath();
               ctx.moveTo(sx, sy);
               ctx.lineTo(ex, ey);
-              ctx.strokeStyle = `rgba(10, 126, 140, ${0.12 * scaleStart})`;
+              ctx.strokeStyle = `rgba(15, 44, 89, ${0.12 * scaleStart})`;
               ctx.lineWidth = 1.2;
               ctx.stroke();
             }
@@ -339,13 +339,13 @@ const NeuralCanvas = ({ isPaused }) => {
             ctx.arc(px, py, 2.5 * scale, 0, Math.PI * 2);
             
             const gradient = ctx.createRadialGradient(px, py, 0, px, py, 2.5 * scale);
-            gradient.addColorStop(0, `rgba(10, 126, 140, ${scale})`);
-            gradient.addColorStop(1, `rgba(10, 126, 140, ${scale * 0.6})`);
+            gradient.addColorStop(0, `rgba(15, 44, 89, ${scale})`);
+            gradient.addColorStop(1, `rgba(15, 44, 89, ${scale * 0.6})`);
             ctx.fillStyle = gradient;
             ctx.fill();
             
             ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(10, 126, 140, 0.3)';
+            ctx.shadowColor = 'rgba(15, 44, 89, 0.3)';
             ctx.fill();
             ctx.shadowBlur = 0;
           }
@@ -588,7 +588,7 @@ const SkillCard = ({ icon, title, level, description, tags, color }) => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        background: 'linear-gradient(135deg, #ffffff, #e6f4f6)',
+        background: 'linear-gradient(135deg, #ffffff, #eaedf2)',
         border: `1px solid ${rgbaColor2}`,
         boxShadow: `0 8px 30px ${hexToRgba(color, 0.05)}`,
         transition: 'transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease, box-shadow 0.4s ease',
@@ -718,7 +718,7 @@ const CardWaveBackground = ({ color, isEven }) => {
 // Premium Project Card component
 const ProjectCard = ({ title, description, features, tech, getTechColor, index = 0 }) => {
   const isEven = index % 2 === 0;
-  const primaryColor = tech && tech.length > 0 ? getTechColor(tech[0]) : '#0a7e8c';
+  const primaryColor = tech && tech.length > 0 ? getTechColor(tech[0]) : '#0F2C59';
 
   return (
     <Card
@@ -726,13 +726,13 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
       sx={{
         borderRadius: isEven ? '24px 60px 24px 60px' : '60px 24px 60px 24px',
         background: 'linear-gradient(to bottom, #ffffff, #eef7f8, #ffffff)',
-        border: '1px solid rgba(10, 126, 140, 0.16)',
+        border: '1px solid rgba(15, 44, 89, 0.16)',
         color: '#051d24',
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
         mb: 4,
-        boxShadow: '0 10px 40px rgba(10, 126, 140, 0.05)',
+        boxShadow: '0 10px 40px rgba(15, 44, 89, 0.05)',
         transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
         '&::before': {
           content: '""',
@@ -741,7 +741,7 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
           left: 0,
           right: 0,
           height: '4px',
-          background: `linear-gradient(90deg, ${primaryColor}, #0a7e8c, ${primaryColor})`,
+          background: `linear-gradient(90deg, ${primaryColor}, #C59B27, ${primaryColor})`,
           transform: 'scaleX(0)',
           transformOrigin: 'left',
           transition: 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
@@ -772,12 +772,12 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
             {description}
           </Typography>
           <Box sx={{ mt: 1.5 }}>
-            <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, mb: 1.5, textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '12px' }}>
+            <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, mb: 1.5, textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '12px' }}>
               Key Features
             </Typography>
             <Box component="ul" sx={{ pl: 3, color: '#425f65', fontSize: '15px', lineHeight: 1.8, m: 0 }}>
               {features.map((feature, i) => (
-                <Box component="li" key={i} sx={{ mb: 1, '&::marker': { color: '#0a7e8c' } }}>
+                <Box component="li" key={i} sx={{ mb: 1, '&::marker': { color: '#C59B27' } }}>
                   {feature}
                 </Box>
               ))}
@@ -898,7 +898,7 @@ export default function App() {
       'SMTP / Email OTP': '#cc5200',
       'CSV / XLSX': '#107c41'
     };
-    return mapping[techName] || '#0a7e8c'; // default teal
+    return mapping[techName] || '#0F2C59'; // default teal
   };
 
   // Nav links
@@ -1008,7 +1008,7 @@ export default function App() {
       icon: <LanguageIcon sx={{ fontSize: 35 }} />,
       title: 'Web Development',
       description: 'Custom, responsive, and SEO-friendly websites that elevate your online presence.',
-      color: '#0a7e8c' // Teal
+      color: '#0F2C59' // Teal
     },
     {
       icon: <CodeIcon sx={{ fontSize: 35 }} />,
@@ -1205,7 +1205,7 @@ export default function App() {
         sx={{
           backgroundColor: trigger ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
           backdropFilter: trigger ? 'blur(16px)' : 'none',
-          boxShadow: trigger ? '0 4px 20px rgba(10, 126, 140, 0.08)' : 'none',
+          boxShadow: trigger ? '0 4px 20px rgba(15, 44, 89, 0.08)' : 'none',
           transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
           overflow: 'visible',
           borderBottom: 'none'
@@ -1223,31 +1223,31 @@ export default function App() {
                 '&:hover img': {
                   transform: 'scale(1.08) rotate(3deg)',
                   borderColor: '#054f59',
-                  boxShadow: '0 4px 12px rgba(10, 126, 140, 0.3)'
+                  boxShadow: '0 4px 12px rgba(15, 44, 89, 0.3)'
                 },
                 '&:hover .navbar-brand': {
-                  color: '#0a7e8c'
+                  color: '#0F2C59'
                 }
               }}
             >
-              <Box
+               <Box
                 component="img"
-                src="images/murali_profile.png"
+                src="images/murali_logo.png"
                 alt="Murali Palanisamy Logo"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleOpenLightbox('images/murali_profile.png');
+                  handleOpenLightbox('images/murali_logo.png');
                 }}
                 sx={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  objectPosition: 'center top',
-                  border: '2px solid #0a7e8c',
-                  boxShadow: '0 2px 8px rgba(10, 126, 140, 0.2)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '8px',
+                  objectFit: 'contain',
+                  border: '1.5px solid rgba(15, 44, 89, 0.15)',
+                  boxShadow: '0 2px 6px rgba(15, 44, 89, 0.1)',
                   transition: 'all 0.3s ease-in-out',
-                  cursor: 'zoom-in'
+                  cursor: 'zoom-in',
+                  backgroundColor: '#ffffff'
                 }}
               />
               <Typography
@@ -1259,7 +1259,7 @@ export default function App() {
                   color: '#051d24',
                   fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
                   transition: 'all 0.3s ease-in-out',
-                  '& span': { color: '#0a7e8c', transition: 'all 0.3s ease-in-out' }
+                  '& span': { color: '#C59B27', transition: 'all 0.3s ease-in-out' }
                 }}
               >
                 Murali <span>Palanisamy</span>
@@ -1278,8 +1278,8 @@ export default function App() {
                     fontWeight: 600,
                     px: 2,
                     '&:hover': {
-                      color: '#0a7e8c',
-                      backgroundColor: 'rgba(10, 126, 140, 0.05)'
+                      color: '#0F2C59',
+                      backgroundColor: 'rgba(15, 44, 89, 0.05)'
                     }
                   }}
                 >
@@ -1341,7 +1341,7 @@ export default function App() {
             width: 280,
             background: 'rgba(255, 255, 255, 0.98)',
             backdropFilter: 'blur(16px)',
-            borderLeft: '1px solid rgba(10, 126, 140, 0.1)',
+            borderLeft: '1px solid rgba(15, 44, 89, 0.1)',
             padding: 3
           }
         }}
@@ -1356,21 +1356,21 @@ export default function App() {
           >
             <Box
               component="img"
-              src="images/murali_profile.png"
+              src="images/murali_logo.png"
               alt="Murali Palanisamy Logo"
               onClick={(e) => {
                 e.stopPropagation();
-                handleOpenLightbox('images/murali_profile.png');
+                handleOpenLightbox('images/murali_logo.png');
               }}
               sx={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                border: '1.5px solid #0a7e8c',
-                boxShadow: '0 2px 6px rgba(10, 126, 140, 0.15)',
-                cursor: 'zoom-in'
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                objectFit: 'contain',
+                border: '1.5px solid rgba(15, 44, 89, 0.15)',
+                boxShadow: '0 2px 6px rgba(15, 44, 89, 0.1)',
+                cursor: 'zoom-in',
+                backgroundColor: '#ffffff'
               }}
             />
             <Typography
@@ -1380,7 +1380,7 @@ export default function App() {
                 fontSize: '24px',
                 color: '#051d24',
                 fontFamily: "'Great Vibes', 'Playball', 'Brush Script MT', cursive",
-                '& span': { color: '#0a7e8c' }
+                '& span': { color: '#C59B27' }
               }}
             >
               Murali <span>P</span>.
@@ -1401,8 +1401,8 @@ export default function App() {
                 borderRadius: '12px',
                 mb: 1,
                 '&:hover': {
-                  backgroundColor: 'rgba(10, 126, 140, 0.08)',
-                  '& .MuiTypography-root': { color: '#0a7e8c' }
+                  backgroundColor: 'rgba(15, 44, 89, 0.08)',
+                  '& .MuiTypography-root': { color: '#C59B27' }
                 }
               }}
             >
@@ -1427,7 +1427,7 @@ export default function App() {
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
-          background: 'radial-gradient(circle at center, #e6f4f6 0%, #f3f8f9 100%)',
+          background: 'radial-gradient(circle at center, #eaedf2 0%, #f4f6f9 100%)',
         }}
       >
         <NeuralCanvas isPaused={isPaused} />
@@ -1448,13 +1448,13 @@ export default function App() {
             onClick={() => setIsPaused(!isPaused)}
             startIcon={isPaused ? <PlayArrowIcon /> : <PauseIcon />}
             sx={{
-              borderColor: 'rgba(10, 126, 140, 0.3)',
-              color: '#0a7e8c',
+              borderColor: 'rgba(15, 44, 89, 0.3)',
+              color: '#0F2C59',
               backdropFilter: 'blur(8px)',
               backgroundColor: 'rgba(255, 255, 255, 0.4)',
               '&:hover': {
-                borderColor: '#0a7e8c',
-                backgroundColor: 'rgba(10, 126, 140, 0.1)',
+                borderColor: '#0F2C59',
+                backgroundColor: 'rgba(15, 44, 89, 0.1)',
               }
             }}
           >
@@ -1463,6 +1463,38 @@ export default function App() {
         </Box>
 
         <Container maxWidth="md" sx={{ zIndex: 2, position: 'relative', textAlign: 'center', px: 3 }}>
+          {/* Main Monogram Logo Badge */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              mb: { xs: 3, md: 5 },
+              animation: 'nameFloat 4s ease-in-out infinite'
+            }}
+          >
+            <Box
+              component="img"
+              src="images/murali_logo.png"
+              alt="Murali Monogram Brand Logo"
+              onClick={() => handleOpenLightbox('images/murali_logo.png')}
+              sx={{
+                width: { xs: '120px', sm: '150px', md: '170px' },
+                height: { xs: '120px', sm: '150px', md: '170px' },
+                borderRadius: '24px',
+                border: '3px solid rgba(197, 155, 39, 0.25)',
+                boxShadow: '0 20px 40px rgba(15, 44, 89, 0.08)',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                cursor: 'zoom-in',
+                backgroundColor: '#ffffff',
+                '&:hover': {
+                  transform: 'scale(1.06) rotate(2deg)',
+                  boxShadow: '0 25px 50px rgba(15, 44, 89, 0.18)',
+                  borderColor: '#0F2C59'
+                }
+              }}
+            />
+          </Box>
+
           <Typography
             variant="h1"
             sx={{
@@ -1472,14 +1504,14 @@ export default function App() {
               fontWeight: 800,
               letterSpacing: '-1.5px',
               color: '#051d24',
-              textShadow: '0 2px 10px rgba(10, 126, 140, 0.05)'
+              textShadow: '0 2px 10px rgba(15, 44, 89, 0.05)'
             }}
           >
             Hello! I'm{' '}
             <Box
               component="span"
               sx={{
-                background: 'linear-gradient(120deg, #0a7e8c 0%, #054f59 30%, #777BB4 50%, #c21d80 70%, #0a7e8c 100%)',
+                background: 'linear-gradient(120deg, #0F2C59 0%, #1A365D 25%, #D4AF37 50%, #C59B27 75%, #0F2C59 100%)',
                 backgroundSize: '200% auto',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -1489,7 +1521,7 @@ export default function App() {
                 cursor: 'pointer',
                 '&:hover': {
                   transform: 'scale(1.05) rotate(1deg)',
-                  textShadow: '0 0 30px rgba(10, 126, 140, 0.35)',
+                  textShadow: '0 0 30px rgba(15, 44, 89, 0.35)',
                 }
               }}
             >
@@ -1501,7 +1533,7 @@ export default function App() {
             variant="h4"
             sx={{
               fontSize: { xs: '16px', sm: '22px', md: '26px' },
-              color: '#0a7e8c',
+              color: '#C59B27',
               mb: 3,
               fontWeight: 600,
               fontFamily: "'Fira Code', 'Space Mono', 'Courier New', monospace",
@@ -1537,7 +1569,7 @@ export default function App() {
             download="MuraliPalanisamy_CV.pdf"
             variant="contained"
             sx={{
-              background: 'linear-gradient(135deg, #0a7e8c 0%, #054f59 100%)',
+              background: 'linear-gradient(135deg, #0F2C59 0%, #0B203E 100%)',
               color: '#ffffff',
               fontSize: '16px',
               fontWeight: 700,
@@ -1545,13 +1577,13 @@ export default function App() {
               py: 1.5,
               borderRadius: '30px',
               border: 'none',
-              boxShadow: '0 4px 15px rgba(10, 126, 140, 0.3)',
+              boxShadow: '0 4px 15px rgba(15, 44, 89, 0.3)',
               animation: 'buttonPulse 2s infinite',
               transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #0d9cb0 0%, #076d7b 100%)',
                 transform: 'translateY(-3px) scale(1.05)',
-                boxShadow: '0 12px 25px rgba(10, 126, 140, 0.45)',
+                boxShadow: '0 12px 25px rgba(15, 44, 89, 0.45)',
               }
             }}
           >
@@ -1563,10 +1595,10 @@ export default function App() {
       {/* Stats Counter Section */}
       <Box
         sx={{
-          backgroundColor: '#e6f4f6',
+          backgroundColor: '#eaedf2',
           py: 6,
-          borderTop: '1px solid rgba(10, 126, 140, 0.12)',
-          borderBottom: '1px solid rgba(10, 126, 140, 0.12)',
+          borderTop: '1px solid rgba(15, 44, 89, 0.12)',
+          borderBottom: '1px solid rgba(15, 44, 89, 0.12)',
           position: 'relative',
           zIndex: 3
         }}
@@ -1576,7 +1608,7 @@ export default function App() {
             {/* Stat 1 */}
             <Grid item xs={12} sm={4}>
               <Box sx={{ textAlign: 'center', py: 2 }}>
-                <Typography variant="h2" sx={{ color: '#0a7e8c', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
+                <Typography variant="h2" sx={{ color: '#0F2C59', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
                   <AnimatedCounter endValue="10" />+
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontWeight: 600, mt: 1 }}>
@@ -1587,7 +1619,7 @@ export default function App() {
             {/* Stat 2 */}
             <Grid item xs={12} sm={4}>
               <Box sx={{ textAlign: 'center', py: 2 }}>
-                <Typography variant="h2" sx={{ color: '#0a7e8c', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
+                <Typography variant="h2" sx={{ color: '#0F2C59', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
                   <AnimatedCounter endValue="25" />+
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontWeight: 600, mt: 1 }}>
@@ -1598,7 +1630,7 @@ export default function App() {
             {/* Stat 3 */}
             <Grid item xs={12} sm={4}>
               <Box sx={{ textAlign: 'center', py: 2 }}>
-                <Typography variant="h2" sx={{ color: '#0a7e8c', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
+                <Typography variant="h2" sx={{ color: '#0F2C59', fontWeight: 800, fontSize: { xs: '45px', md: '56px' } }}>
                   <AnimatedCounter endValue={yearsOfExperience} />+
                 </Typography>
                 <Typography variant="subtitle1" sx={{ color: 'text.secondary', fontWeight: 600, mt: 1 }}>
@@ -1625,8 +1657,8 @@ export default function App() {
                     width: '100%',
                     maxWidth: { xs: '380px', md: '100%' },
                     margin: '0 auto',
-                    boxShadow: '0 20px 40px rgba(10, 126, 140, 0.12)',
-                    border: '1px solid rgba(10, 126, 140, 0.15)',
+                    boxShadow: '0 20px 40px rgba(15, 44, 89, 0.12)',
+                    border: '1px solid rgba(15, 44, 89, 0.15)',
                     '&::before': {
                       content: '""',
                       position: 'absolute',
@@ -1661,7 +1693,7 @@ export default function App() {
               <ScrollFadeIn delay={0.2}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3.5 }}>
                   <Box>
-                    <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+                    <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
                       My Intro
                     </Typography>
                     <Typography variant="h3" sx={{ fontWeight: 800, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
@@ -1682,39 +1714,39 @@ export default function App() {
                       p: 3,
                       borderRadius: '20px',
                       background: 'rgba(255, 255, 255, 0.65)',
-                      border: '1px solid rgba(10, 126, 140, 0.12)',
-                      boxShadow: '0 4px 20px rgba(10, 126, 140, 0.04)'
+                      border: '1px solid rgba(15, 44, 89, 0.12)',
+                      boxShadow: '0 4px 20px rgba(15, 44, 89, 0.04)'
                     }}
                   >
                     <Grid container spacing={2}>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Name:</strong> Murali Palanisamy
+                          <strong style={{ color: '#0F2C59' }}>Name:</strong> Murali Palanisamy
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Date of Birth:</strong> September 19, 2001
+                          <strong style={{ color: '#0F2C59' }}>Date of Birth:</strong> September 19, 2001
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Address:</strong> Krishnagiri, TamilNadu, India
+                          <strong style={{ color: '#0F2C59' }}>Address:</strong> Krishnagiri, TamilNadu, India
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Zip Code:</strong> 635207
+                          <strong style={{ color: '#0F2C59' }}>Zip Code:</strong> 635207
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24', wordBreak: 'break-word' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Email:</strong> muralip.software.engineer@gmail.com
+                          <strong style={{ color: '#0F2C59' }}>Email:</strong> muralip.software.engineer@gmail.com
                         </Typography>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Typography variant="body2" sx={{ fontSize: '15px', color: '#051d24' }}>
-                          <strong style={{ color: '#0a7e8c' }}>Phone:</strong> +91 93616 59922
+                          <strong style={{ color: '#0F2C59' }}>Phone:</strong> +91 93616 59922
                         </Typography>
                       </Grid>
                     </Grid>
@@ -1727,10 +1759,10 @@ export default function App() {
                     </Typography>
                     <Grid container spacing={2}>
                       {[
-                        { icon: <MusicNoteIcon sx={{ color: '#0a7e8c' }} />, text: 'Music' },
-                        { icon: <FlightIcon sx={{ color: '#0a7e8c' }} />, text: 'Travel' },
-                        { icon: <BrushIcon sx={{ color: '#0a7e8c' }} />, text: 'Artist' },
-                        { icon: <SportsBasketballIcon sx={{ color: '#0a7e8c' }} />, text: 'Sports' }
+                        { icon: <MusicNoteIcon sx={{ color: '#0F2C59' }} />, text: 'Music' },
+                        { icon: <FlightIcon sx={{ color: '#0F2C59' }} />, text: 'Travel' },
+                        { icon: <BrushIcon sx={{ color: '#0F2C59' }} />, text: 'Artist' },
+                        { icon: <SportsBasketballIcon sx={{ color: '#0F2C59' }} />, text: 'Sports' }
                       ].map((interest, idx) => (
                         <Grid item xs={6} sm={3} key={idx}>
                           <Box
@@ -1740,8 +1772,8 @@ export default function App() {
                               gap: 1.5,
                               p: 1.5,
                               borderRadius: '12px',
-                              background: 'rgba(10, 126, 140, 0.05)',
-                              border: '1px solid rgba(10, 126, 140, 0.08)',
+                              background: 'rgba(15, 44, 89, 0.05)',
+                              border: '1px solid rgba(15, 44, 89, 0.08)',
                               justifyContent: 'center'
                             }}
                           >
@@ -1762,10 +1794,10 @@ export default function App() {
       </Box>
 
       {/* Skills Section (with different premium colors added) */}
-      <Box id="skills" sx={{ py: 12, backgroundColor: 'rgba(10, 126, 140, 0.03)', position: 'relative', zIndex: 3 }}>
+      <Box id="skills" sx={{ py: 12, backgroundColor: 'rgba(15, 44, 89, 0.03)', position: 'relative', zIndex: 3 }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
               Expertise & Technologies
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
@@ -1799,7 +1831,7 @@ export default function App() {
       <Box id="certifications" sx={{ py: 12, position: 'relative', zIndex: 3 }}>
         <Container maxWidth="md">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
               My Achievements
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
@@ -1814,8 +1846,8 @@ export default function App() {
             <Card
               sx={{
                 background: '#ffffff',
-                border: '1px solid rgba(10, 126, 140, 0.15)',
-                boxShadow: '0 15px 40px rgba(10, 126, 140, 0.06)',
+                border: '1px solid rgba(15, 44, 89, 0.15)',
+                boxShadow: '0 15px 40px rgba(15, 44, 89, 0.06)',
                 borderRadius: '24px',
                 overflow: 'visible',
                 width: '100%',
@@ -1823,8 +1855,8 @@ export default function App() {
                 transition: 'all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
                 '&:hover': {
                   transform: 'translateY(-10px) scale(1.01) rotate(0.5deg)',
-                  boxShadow: '0 30px 60px rgba(10, 126, 140, 0.15)',
-                  borderColor: 'rgba(10, 126, 140, 0.3)',
+                  boxShadow: '0 30px 60px rgba(15, 44, 89, 0.15)',
+                  borderColor: 'rgba(15, 44, 89, 0.3)',
                 }
               }}
             >
@@ -1842,8 +1874,8 @@ export default function App() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 8px 24px rgba(10, 126, 140, 0.2)',
-                  border: '2px solid #0a7e8c',
+                  boxShadow: '0 8px 24px rgba(15, 44, 89, 0.2)',
+                  border: '2px solid #C59B27',
                   animation: 'floatBadge 4s ease-in-out infinite',
                   pointerEvents: 'none',
                   '@keyframes floatBadge': {
@@ -1853,7 +1885,7 @@ export default function App() {
                 }}
               >
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2L14.39 5.57L18.5 4.91L17.84 9.02L21.41 11.41L17.84 13.8L18.5 17.91L14.39 17.25L12 20.82L9.61 17.25L5.5 17.91L6.16 13.8L2.59 11.41L6.16 9.02L5.5 4.91L9.61 5.57L12 2Z" fill="#0a7e8c" />
+                  <path d="M12 2L14.39 5.57L18.5 4.91L17.84 9.02L21.41 11.41L17.84 13.8L18.5 17.91L14.39 17.25L12 20.82L9.61 17.25L5.5 17.91L6.16 13.8L2.59 11.41L6.16 9.02L5.5 4.91L9.61 5.57L12 2Z" fill="#C59B27" />
                   <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM10.5 14.5L8 12L9.41 10.59L10.5 11.67L14.59 7.58L16 9L10.5 14.5Z" fill="#ffffff" />
                 </svg>
               </Box>
@@ -1868,7 +1900,7 @@ export default function App() {
                   overflow: 'hidden',
                   borderTopLeftRadius: '24px',
                   borderTopRightRadius: '24px',
-                  borderBottom: '1px solid rgba(10, 126, 140, 0.12)',
+                  borderBottom: '1px solid rgba(15, 44, 89, 0.12)',
                   '&:hover .spotlight-overlay': {
                     opacity: 1
                   },
@@ -1914,11 +1946,11 @@ export default function App() {
                       width: '60px',
                       height: '60px',
                       borderRadius: '50%',
-                      backgroundColor: 'rgba(10, 126, 140, 0.9)',
+                      backgroundColor: 'rgba(15, 44, 89, 0.9)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      boxShadow: '0 8px 24px rgba(10, 126, 140, 0.4)',
+                      boxShadow: '0 8px 24px rgba(15, 44, 89, 0.4)',
                       transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                       transform: 'scale(0.9)',
                       '.spotlight-overlay:hover &': {
@@ -1950,10 +1982,10 @@ export default function App() {
                       label={skill}
                       size="small"
                       sx={{
-                        backgroundColor: 'rgba(10, 126, 140, 0.05)',
-                        color: '#0a7e8c',
+                        backgroundColor: 'rgba(15, 44, 89, 0.05)',
+                        color: '#0F2C59',
                         fontWeight: 650,
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
+                        border: '1px solid rgba(15, 44, 89, 0.12)',
                         borderRadius: '6px',
                         fontSize: '12px'
                       }}
@@ -1974,12 +2006,12 @@ export default function App() {
                     fontWeight: 700,
                     fontSize: '15px',
                     borderRadius: '30px',
-                    background: 'linear-gradient(135deg, #0a7e8c 0%, #054f59 100%)',
-                    boxShadow: '0 4px 15px rgba(10, 126, 140, 0.25)',
+                    background: 'linear-gradient(135deg, #0F2C59 0%, #0B203E 100%)',
+                    boxShadow: '0 4px 15px rgba(15, 44, 89, 0.25)',
                     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                     '&:hover': {
                       background: 'linear-gradient(135deg, #0d9cb0 0%, #076d7b 100%)',
-                      boxShadow: '0 8px 25px rgba(10, 126, 140, 0.4)',
+                      boxShadow: '0 8px 25px rgba(15, 44, 89, 0.4)',
                       transform: 'translateY(-2px)'
                     }
                   }}
@@ -1993,10 +2025,10 @@ export default function App() {
       </Box>
 
       {/* Services Section (with different custom colors added) */}
-      <Box id="services" sx={{ py: 12, backgroundColor: 'rgba(10, 126, 140, 0.03)', position: 'relative', zIndex: 3 }}>
+      <Box id="services" sx={{ py: 12, backgroundColor: 'rgba(15, 44, 89, 0.03)', position: 'relative', zIndex: 3 }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
               I Am Great At
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
@@ -2013,12 +2045,12 @@ export default function App() {
                     <Card
                       sx={{
                         background: 'rgba(255, 255, 255, 0.75)',
-                        border: '1px solid rgba(10, 126, 140, 0.12)',
+                        border: '1px solid rgba(15, 44, 89, 0.12)',
                         borderRadius: isEven ? '24px 60px 24px 60px' : '60px 24px 60px 24px',
                         width: '100%',
                         position: 'relative',
                         overflow: 'hidden',
-                        boxShadow: '0 10px 40px rgba(10, 126, 140, 0.05)',
+                        boxShadow: '0 10px 40px rgba(15, 44, 89, 0.05)',
                         transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
                         '&::before': {
                           content: '""',
@@ -2027,7 +2059,7 @@ export default function App() {
                           left: 0,
                           right: 0,
                           height: '4px',
-                          background: `linear-gradient(90deg, ${service.color}, #0a7e8c, ${service.color})`,
+                          background: `linear-gradient(90deg, ${service.color}, #0F2C59, ${service.color})`,
                           transform: 'scaleX(0)',
                           transformOrigin: 'left',
                           transition: 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)',
@@ -2136,9 +2168,9 @@ export default function App() {
       <Box
         sx={{
           py: 10,
-          background: 'linear-gradient(135deg, #f3f8f9 0%, #e6f4f6 100%)',
-          borderTop: '1px solid rgba(10, 126, 140, 0.12)',
-          borderBottom: '1px solid rgba(10, 126, 140, 0.12)',
+          background: 'linear-gradient(135deg, #f4f6f9 0%, #eaedf2 100%)',
+          borderTop: '1px solid rgba(15, 44, 89, 0.12)',
+          borderBottom: '1px solid rgba(15, 44, 89, 0.12)',
           position: 'relative',
           zIndex: 3
         }}
@@ -2159,13 +2191,13 @@ export default function App() {
                     objectFit: 'cover',
                     objectPosition: 'center top',
                     border: { xs: '2px solid #ffffff', md: '4px solid #ffffff' },
-                    boxShadow: '0 15px 35px rgba(10, 126, 140, 0.15)',
+                    boxShadow: '0 15px 35px rgba(15, 44, 89, 0.15)',
                     transition: 'all 0.3s ease',
                     cursor: 'zoom-in',
                     '&:hover': {
                       transform: 'scale(1.05)',
-                      borderColor: '#0a7e8c',
-                      boxShadow: '0 20px 45px rgba(10, 126, 140, 0.25)'
+                      borderColor: '#0F2C59',
+                      boxShadow: '0 20px 45px rgba(15, 44, 89, 0.25)'
                     }
                   }}
                 />
@@ -2189,13 +2221,13 @@ export default function App() {
                         py: { xs: 1, md: 1.8 },
                         fontSize: { xs: '12px', md: '16px' },
                         fontWeight: 700,
-                        backgroundColor: '#0a7e8c',
+                        backgroundColor: '#0F2C59',
                         color: '#ffffff',
-                        boxShadow: '0 4px 15px rgba(10, 126, 140, 0.25)',
+                        boxShadow: '0 4px 15px rgba(15, 44, 89, 0.25)',
                         '&:hover': {
                           backgroundColor: '#054f59',
                           color: '#ffffff',
-                          boxShadow: '0 6px 20px rgba(10, 126, 140, 0.3)'
+                          boxShadow: '0 6px 20px rgba(15, 44, 89, 0.3)'
                         }
                       }}
                     >
@@ -2213,8 +2245,8 @@ export default function App() {
       <Box id="projects" sx={{ py: 12, position: 'relative', zIndex: 3 }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, px: 2, py: 1, backgroundColor: 'rgba(10, 126, 140, 0.06)', borderRadius: '30px', mb: 2, border: '1px solid rgba(10, 126, 140, 0.15)' }}>
-              <Typography variant="body2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+            <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, px: 2, py: 1, backgroundColor: 'rgba(15, 44, 89, 0.06)', borderRadius: '30px', mb: 2, border: '1px solid rgba(15, 44, 89, 0.15)' }}>
+              <Typography variant="body2" sx={{ color: '#0F2C59', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: 0.5 }}>
                 💼 Featured Work
               </Typography>
             </Box>
@@ -2244,9 +2276,9 @@ export default function App() {
       </Box>
 
       {/* Client Logos Infinite Scroll Marquee */}
-      <Box sx={{ py: 6, backgroundColor: '#ffffff', position: 'relative', zIndex: 3, borderTop: '1px solid rgba(10, 126, 140, 0.08)', borderBottom: '1px solid rgba(10, 126, 140, 0.08)' }}>
+      <Box sx={{ py: 6, backgroundColor: '#ffffff', position: 'relative', zIndex: 3, borderTop: '1px solid rgba(15, 44, 89, 0.08)', borderBottom: '1px solid rgba(15, 44, 89, 0.08)' }}>
         <Container maxWidth="lg" sx={{ mb: 4, textAlign: 'center' }}>
-          <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+          <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
             Our Esteemed Clients
           </Typography>
           <Typography variant="h4" sx={{ fontWeight: 800, color: '#051d24', fontSize: { xs: '26px', md: '34px' } }}>
@@ -2275,7 +2307,7 @@ export default function App() {
       <Box id="contact" sx={{ py: 12, position: 'relative', zIndex: 3 }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
-            <Typography variant="subtitle2" sx={{ color: '#0a7e8c', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
               Contact Us
             </Typography>
             <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
@@ -2295,8 +2327,8 @@ export default function App() {
                     p: { xs: 4, md: 5 },
                     borderRadius: '24px',
                     backgroundColor: 'rgba(255, 255, 255, 0.75)',
-                    border: '1px solid rgba(10, 126, 140, 0.15)',
-                    boxShadow: '0 15px 40px rgba(10, 126, 140, 0.05)',
+                    border: '1px solid rgba(15, 44, 89, 0.15)',
+                    boxShadow: '0 15px 40px rgba(15, 44, 89, 0.05)',
                     width: '100%'
                   }}
                 >
@@ -2311,11 +2343,11 @@ export default function App() {
                         onChange={handleInputChange}
                         required
                         sx={{
-                          '& label.Mui-focused': { color: '#0a7e8c' },
+                          '& label.Mui-focused': { color: '#0F2C59' },
                           '& .MuiOutlinedInput-root': {
                             borderRadius: '12px',
-                            '& fieldset': { borderColor: 'rgba(10, 126, 140, 0.2)' },
-                            '&:hover fieldset': { borderColor: '#0a7e8c' },
+                            '& fieldset': { borderColor: 'rgba(15, 44, 89, 0.2)' },
+                            '&:hover fieldset': { borderColor: '#0F2C59' },
                           }
                         }}
                       />
@@ -2331,11 +2363,11 @@ export default function App() {
                         onChange={handleInputChange}
                         required
                         sx={{
-                          '& label.Mui-focused': { color: '#0a7e8c' },
+                          '& label.Mui-focused': { color: '#0F2C59' },
                           '& .MuiOutlinedInput-root': {
                             borderRadius: '12px',
-                            '& fieldset': { borderColor: 'rgba(10, 126, 140, 0.2)' },
-                            '&:hover fieldset': { borderColor: '#0a7e8c' },
+                            '& fieldset': { borderColor: 'rgba(15, 44, 89, 0.2)' },
+                            '&:hover fieldset': { borderColor: '#0F2C59' },
                           }
                         }}
                       />
@@ -2350,11 +2382,11 @@ export default function App() {
                         onChange={handleInputChange}
                         required
                         sx={{
-                          '& label.Mui-focused': { color: '#0a7e8c' },
+                          '& label.Mui-focused': { color: '#0F2C59' },
                           '& .MuiOutlinedInput-root': {
                             borderRadius: '12px',
-                            '& fieldset': { borderColor: 'rgba(10, 126, 140, 0.2)' },
-                            '&:hover fieldset': { borderColor: '#0a7e8c' },
+                            '& fieldset': { borderColor: 'rgba(15, 44, 89, 0.2)' },
+                            '&:hover fieldset': { borderColor: '#0F2C59' },
                           }
                         }}
                       />
@@ -2371,11 +2403,11 @@ export default function App() {
                         onChange={handleInputChange}
                         required
                         sx={{
-                          '& label.Mui-focused': { color: '#0a7e8c' },
+                          '& label.Mui-focused': { color: '#0F2C59' },
                           '& .MuiOutlinedInput-root': {
                             borderRadius: '12px',
-                            '& fieldset': { borderColor: 'rgba(10, 126, 140, 0.2)' },
-                            '&:hover fieldset': { borderColor: '#0a7e8c' },
+                            '& fieldset': { borderColor: 'rgba(15, 44, 89, 0.2)' },
+                            '&:hover fieldset': { borderColor: '#0F2C59' },
                           }
                         }}
                       />
@@ -2504,9 +2536,9 @@ export default function App() {
                           py: 1.8,
                           fontSize: '15px',
                           fontWeight: 700,
-                          boxShadow: '0 4px 15px rgba(10, 126, 140, 0.2)',
+                          boxShadow: '0 4px 15px rgba(15, 44, 89, 0.2)',
                           '&:hover': {
-                            boxShadow: '0 6px 25px rgba(10, 126, 140, 0.35)',
+                            boxShadow: '0 6px 25px rgba(15, 44, 89, 0.35)',
                             backgroundColor: '#075b66'
                           }
                         }}
@@ -2771,7 +2803,7 @@ export default function App() {
           width: '100%',
           overflow: 'hidden',
           lineHeight: 0,
-          backgroundColor: '#f3f8f9',
+          backgroundColor: '#f4f6f9',
           position: 'relative',
           zIndex: 3
         }}
@@ -2788,13 +2820,13 @@ export default function App() {
         >
           {/* Wave 1 (Deepest) */}
           <path
-            fill="#0a7e8c"
+            fill="#C59B27"
             opacity="0.08"
             d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,106.7C960,117,1056,139,1152,144C1248,149,1344,139,1392,133.3L1440,128L1440,200L1392,200C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z"
           />
           {/* Wave 2 (Middle) */}
           <path
-            fill="#0a7e8c"
+            fill="#C59B27"
             opacity="0.18"
             d="M0,128L48,122.7C96,117,192,107,288,112C384,117,480,139,576,144C672,149,768,139,864,122.7C960,107,1056,85,1152,90.7C1248,96,1344,128,1392,144L1440,160L1440,200L1392,200C1344,200,1248,200,1152,200C1056,200,960,200,864,200C768,200,672,200,576,200C480,200,384,200,288,200C192,200,96,200,48,200L0,200Z"
           />
@@ -2832,10 +2864,10 @@ export default function App() {
                         content: '"›"',
                         fontSize: '20px',
                         marginRight: '8px',
-                        color: '#0a7e8c',
+                        color: '#0F2C59',
                         lineHeight: 0
                       },
-                      '&:hover': { color: '#0a7e8c', transform: 'translateX(5px)' },
+                      '&:hover': { color: '#0F2C59', transform: 'translateX(5px)' },
                       transition: 'all 0.3s ease'
                     }}
                   >
@@ -2870,7 +2902,7 @@ export default function App() {
                         content: '"›"',
                         fontSize: '20px',
                         marginRight: '8px',
-                        color: '#0a7e8c',
+                        color: '#0F2C59',
                         lineHeight: 0
                       }
                     }}
@@ -2889,27 +2921,27 @@ export default function App() {
               
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
-                  <RoomIcon sx={{ color: '#0a7e8c', mt: 0.2 }} />
+                  <RoomIcon sx={{ color: '#0F2C59', mt: 0.2 }} />
                   <Typography sx={{ color: '#425f65', fontSize: '15px', fontWeight: 650 }}>
                     T-Nagar Chennai 600017
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                  <PhoneIcon sx={{ color: '#0a7e8c' }} />
+                  <PhoneIcon sx={{ color: '#0F2C59' }} />
                   <Typography
                     component="a"
                     href="tel:+919361659922"
-                    sx={{ color: '#425f65', fontSize: '15px', fontWeight: 650, textDecoration: 'none', '&:hover': { color: '#0a7e8c' } }}
+                    sx={{ color: '#425f65', fontSize: '15px', fontWeight: 650, textDecoration: 'none', '&:hover': { color: '#0F2C59' } }}
                   >
                     +91 93616 59922
                   </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
-                  <EmailIcon sx={{ color: '#0a7e8c', mt: 0.2 }} />
+                  <EmailIcon sx={{ color: '#0F2C59', mt: 0.2 }} />
                   <Typography
                     component="a"
                     href="mailto:muralip.software.engineer@gmail.com"
-                    sx={{ color: '#425f65', fontSize: '15px', fontWeight: 650, textDecoration: 'none', display: 'block', wordBreak: 'break-all', '&:hover': { color: '#0a7e8c' } }}
+                    sx={{ color: '#425f65', fontSize: '15px', fontWeight: 650, textDecoration: 'none', display: 'block', wordBreak: 'break-all', '&:hover': { color: '#0F2C59' } }}
                   >
                     muralip.software.engineer@gmail.com
                   </Typography>
@@ -2928,15 +2960,15 @@ export default function App() {
                     href={social.link}
                     target="_blank"
                     sx={{
-                      backgroundColor: 'rgba(10, 126, 140, 0.05)',
-                      color: '#0a7e8c',
+                      backgroundColor: 'rgba(15, 44, 89, 0.05)',
+                      color: '#0F2C59',
                       width: 44,
                       height: 44,
-                      border: '1px solid rgba(10, 126, 140, 0.12)',
+                      border: '1px solid rgba(15, 44, 89, 0.12)',
                       '&:hover': {
-                        backgroundColor: '#0a7e8c',
+                        backgroundColor: '#0F2C59',
                         color: '#ffffff',
-                        boxShadow: '0 4px 15px rgba(10, 126, 140, 0.25)',
+                        boxShadow: '0 4px 15px rgba(15, 44, 89, 0.25)',
                         transform: 'translateY(-3px)'
                       },
                       transition: 'all 0.3s ease'
@@ -2950,10 +2982,10 @@ export default function App() {
           </Grid>
 
           {/* Copyright Divider */}
-          <Box sx={{ borderTop: '1px solid rgba(10, 126, 140, 0.08)', mt: 6, pt: 4, textAlign: 'center' }}>
+          <Box sx={{ borderTop: '1px solid rgba(15, 44, 89, 0.08)', mt: 6, pt: 4, textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'rgba(5, 29, 36, 0.5)', textAlign: 'center' }}>
               Copyright © {new Date().getFullYear()}{' '}
-              <Link href="https://muralisoftware.vercel.app/" target="_blank" sx={{ color: '#0a7e8c', textDecoration: 'none', '&:hover': { color: '#054f59' } }}>
+              <Link href="https://muralisoftware.vercel.app/" target="_blank" sx={{ color: '#0F2C59', textDecoration: 'none', '&:hover': { color: '#0B203E' } }}>
                 muralisoftware
               </Link>. All rights reserved.
             </Typography>
@@ -3009,10 +3041,10 @@ export default function App() {
             top: 16,
             right: 16,
             color: '#ffffff',
-            backgroundColor: 'rgba(10, 126, 140, 0.3)',
+            backgroundColor: 'rgba(15, 44, 89, 0.3)',
             backdropFilter: 'blur(4px)',
             '&:hover': {
-              backgroundColor: 'rgba(10, 126, 140, 0.6)',
+              backgroundColor: 'rgba(15, 44, 89, 0.6)',
               transform: 'scale(1.1)'
             },
             transition: 'all 0.2s ease',

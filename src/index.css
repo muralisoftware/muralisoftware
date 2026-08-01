@@ -23,15 +23,15 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #edf3f5;
+  background: #eaedf2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #a8c5cc;
+  background: #b8c5d6;
   border-radius: 5px;
-  border: 2px solid #edf3f5;
+  border: 2px solid #eaedf2;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0a7e8c;
+  background: #0F2C59;
 }
 
 /* Neural Network Background Canvas */
@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 
 /* Selection Color */
 ::selection {
-  background: rgba(10, 126, 140, 0.15);
+  background: rgba(197, 155, 39, 0.15);
   color: #051d24;
 }
 
@@ -74,7 +74,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
   white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(10, 126, 140, 0.2);
+  box-shadow: 0 4px 15px rgba(15, 44, 89, 0.2);
 }
 
 .social-btn i {
@@ -126,8 +126,8 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   padding: 30px 0;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(10, 126, 140, 0.08);
-  border-bottom: 1px solid rgba(10, 126, 140, 0.08);
+  border-top: 1px solid rgba(15, 44, 89, 0.08);
+  border-bottom: 1px solid rgba(15, 44, 89, 0.08);
 }
 
 .logo-scroll-wrapper {
@@ -147,17 +147,17 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   padding: 15px 30px;
   margin-right: 40px;
   background: #ffffff;
-  border: 1px solid rgba(10, 126, 140, 0.06);
-  box-shadow: 0 4px 12px rgba(10, 126, 140, 0.03);
+  border: 1px solid rgba(15, 44, 89, 0.06);
+  box-shadow: 0 4px 12px rgba(15, 44, 89, 0.03);
   border-radius: 16px;
   transition: all 0.3s ease;
 }
 
 .client-logo-container:hover {
-  background: rgba(10, 126, 140, 0.02);
-  border-color: rgba(10, 126, 140, 0.25);
+  background: rgba(15, 44, 89, 0.02);
+  border-color: rgba(15, 44, 89, 0.25);
   transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(10, 126, 140, 0.1);
+  box-shadow: 0 6px 16px rgba(15, 44, 89, 0.1);
 }
 
 .client-logo {
@@ -186,13 +186,13 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 .glass-panel {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(10, 126, 140, 0.1);
+  border: 1px solid rgba(15, 44, 89, 0.1);
 }
 
 .glass-card {
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(10, 126, 140, 0.08);
+  border: 1px solid rgba(15, 44, 89, 0.08);
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -201,7 +201,7 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
   position: absolute;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(10, 126, 140, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+  background: radial-gradient(circle, rgba(15, 44, 89, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
   border-radius: 50%;
   pointer-events: none;
   opacity: 0;
@@ -250,20 +250,20 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
 /* Button Pulse Animation */
 @keyframes buttonPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(10, 126, 140, 0.45);
+    box-shadow: 0 0 0 0 rgba(197, 155, 39, 0.45);
   }
   70% {
-    box-shadow: 0 0 0 12px rgba(10, 126, 140, 0);
+    box-shadow: 0 0 0 12px rgba(197, 155, 39, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(10, 126, 140, 0);
+    box-shadow: 0 0 0 0 rgba(197, 155, 39, 0);
   }
 }
 
 /* Typing Cursor Blinking */
 @keyframes blink {
   from, to { border-right-color: transparent }
-  50% { border-right-color: #0a7e8c; }
+  50% { border-right-color: #C59B27; }
 }
 
 /* Slide Up and Fade In */
