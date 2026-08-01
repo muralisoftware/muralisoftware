@@ -716,7 +716,7 @@ const CardWaveBackground = ({ color, isEven }) => {
 };
 
 // Premium Project Card component
-const ProjectCard = ({ title, description, features, tech, getTechColor, index = 0 }) => {
+const ProjectCard = ({ title, description, features, tech, getTechColor, image, handleOpenLightbox, index = 0 }) => {
   const isEven = index % 2 === 0;
   const primaryColor = tech && tech.length > 0 ? getTechColor(tech[0]) : '#0F2C59';
 
@@ -725,9 +725,9 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
       className="glass-card"
       sx={{
         borderRadius: isEven ? '24px 60px 24px 60px' : '60px 24px 60px 24px',
-        background: 'linear-gradient(to bottom, #ffffff, #eef7f8, #ffffff)',
+        background: (theme) => theme.palette.mode === 'light' ? 'linear-gradient(to bottom, #ffffff, #eef7f8, #ffffff)' : 'linear-gradient(to bottom, #101f42, #0d1630, #101f42)',
         border: '1px solid rgba(15, 44, 89, 0.16)',
-        color: '#051d24',
+        color: 'text.primary',
         position: 'relative',
         overflow: 'hidden',
         width: '100%',
@@ -763,19 +763,19 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
     >
       <CardWaveBackground color={primaryColor} isEven={isEven} />
       
-      <Grid container spacing={4} sx={{ padding: { xs: 4, md: 5 }, position: 'relative', zIndex: 1 }}>
-        <Grid item xs={12} md={8} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+      <Grid container spacing={4} sx={{ padding: { xs: 4, md: 5 }, position: 'relative', zIndex: 1, alignItems: 'center' }}>
+        <Grid item xs={12} md={image ? 7 : 8} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
           <Typography className="project-title" variant="h4" sx={{ fontWeight: 700, fontSize: { xs: '24px', md: '30px' } }}>
             {title}
           </Typography>
-          <Typography sx={{ color: '#425f65', fontSize: '16px', lineHeight: 1.8 }}>
+          <Typography sx={{ color: 'text.secondary', fontSize: '16px', lineHeight: 1.8 }}>
             {description}
           </Typography>
           <Box sx={{ mt: 1.5 }}>
             <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, mb: 1.5, textTransform: 'uppercase', letterSpacing: '1.5px', fontSize: '12px' }}>
               Key Features
             </Typography>
-            <Box component="ul" sx={{ pl: 3, color: '#425f65', fontSize: '15px', lineHeight: 1.8, m: 0 }}>
+            <Box component="ul" sx={{ pl: 3, color: 'text.secondary', fontSize: '15px', lineHeight: 1.8, m: 0 }}>
               {features.map((feature, i) => (
                 <Box component="li" key={i} sx={{ mb: 1, '&::marker': { color: '#C59B27' } }}>
                   {feature}
@@ -783,36 +783,84 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, index =
               ))}
             </Box>
           </Box>
+          
+          {image && (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 2 }}>
+              {tech.map((t) => {
+                const techColor = getTechColor(t);
+                return (
+                  <Chip
+                    key={t}
+                    label={t}
+                    sx={{
+                      backgroundColor: hexToRgba(techColor, 0.08),
+                      color: techColor,
+                      border: `1px solid ${hexToRgba(techColor, 0.25)}`,
+                      borderRadius: '10px',
+                      fontWeight: 700,
+                      fontSize: '13px',
+                      padding: '18px 10px',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        backgroundColor: techColor,
+                        color: '#ffffff',
+                        transform: 'scale(1.05)',
+                        boxShadow: `0 4px 15px ${hexToRgba(techColor, 0.35)}`
+                      }
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          )}
         </Grid>
         
-        <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: { xs: 'flex-start', md: 'flex-end' } }}>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
-            {tech.map((t) => {
-              const techColor = getTechColor(t);
-              return (
-                <Chip
-                  key={t}
-                  label={t}
-                  sx={{
-                    backgroundColor: hexToRgba(techColor, 0.08),
-                    color: techColor,
-                    border: `1px solid ${hexToRgba(techColor, 0.25)}`,
-                    borderRadius: '10px',
-                    fontWeight: 700,
-                    fontSize: '13px',
-                    padding: '18px 10px',
-                    transition: 'all 0.3s ease',
-                    '&:hover': {
-                      backgroundColor: techColor,
-                      color: '#ffffff',
-                      transform: 'scale(1.05)',
-                      boxShadow: `0 4px 15px ${hexToRgba(techColor, 0.35)}`
-                    }
-                  }}
-                />
-              );
-            })}
-          </Box>
+        <Grid item xs={12} md={image ? 5 : 4} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+          {!image ? (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, justifyContent: { xs: 'flex-start', md: 'flex-end' } }}>
+              {tech.map((t) => {
+                const techColor = getTechColor(t);
+                return (
+                  <Chip
+                    key={t}
+                    label={t}
+                    sx={{
+                      backgroundColor: hexToRgba(techColor, 0.08),
+                      color: techColor,
+                      border: `1px solid ${hexToRgba(techColor, 0.25)}`,
+                      borderRadius: '10px',
+                      fontWeight: 700,
+                      fontSize: '13px',
+                      padding: '18px 10px',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        backgroundColor: techColor,
+                        color: '#ffffff',
+                        transform: 'scale(1.05)',
+                        boxShadow: `0 4px 15px ${hexToRgba(techColor, 0.35)}`
+                      }
+                    }}
+                  />
+                );
+              })}
+            </Box>
+          ) : (
+            <Box
+              component="img"
+              src={image}
+              alt={`${title} Illustration`}
+              sx={{
+                width: '100%',
+                height: 'auto',
+                maxHeight: '340px',
+                objectFit: 'contain',
+                transition: 'transform 0.4s ease',
+                '&:hover': {
+                  transform: 'scale(1.03)'
+                }
+              }}
+            />
+          )}
         </Grid>
       </Grid>
     </Card>
@@ -1794,7 +1842,19 @@ export default function App() {
       </Box>
 
       {/* Skills Section (with different premium colors added) */}
-      <Box id="skills" sx={{ py: 12, backgroundColor: 'rgba(15, 44, 89, 0.03)', position: 'relative', zIndex: 3 }}>
+      <Box 
+        id="skills" 
+        sx={{ 
+          py: 12, 
+          position: 'relative', 
+          zIndex: 3,
+          backgroundImage: 'url(/images/skills_bg.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
@@ -2242,7 +2302,19 @@ export default function App() {
       </Box>
 
       {/* Projects Section (with dynamic tag colors) */}
-      <Box id="projects" sx={{ py: 12, position: 'relative', zIndex: 3 }}>
+      <Box 
+        id="projects" 
+        sx={{ 
+          py: 12, 
+          position: 'relative', 
+          zIndex: 3,
+          backgroundImage: 'url(/images/projects_bg.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 8 }}>
             <Box sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, px: 2, py: 1, backgroundColor: 'rgba(15, 44, 89, 0.06)', borderRadius: '30px', mb: 2, border: '1px solid rgba(15, 44, 89, 0.15)' }}>
@@ -2266,6 +2338,8 @@ export default function App() {
                   description={project.description}
                   features={project.features}
                   tech={project.tech}
+                  image={project.image}
+                  handleOpenLightbox={handleOpenLightbox}
                   getTechColor={getTechColor}
                   index={idx}
                 />
