@@ -716,7 +716,7 @@ const CardWaveBackground = ({ color, isEven }) => {
 };
 
 // Premium Project Card component
-const ProjectCard = ({ title, description, features, tech, getTechColor, image, handleOpenLightbox, index = 0 }) => {
+const ProjectCard = ({ title, description, features, tech, getTechColor, image, handleOpenLightbox, link, index = 0 }) => {
   const isEven = index % 2 === 0;
   const primaryColor = tech && tech.length > 0 ? getTechColor(tech[0]) : '#0F2C59';
 
@@ -783,6 +783,37 @@ const ProjectCard = ({ title, description, features, tech, getTechColor, image, 
               ))}
             </Box>
           </Box>
+          
+          {link && (
+            <Box sx={{ mt: 1, display: 'flex', gap: 2 }}>
+              <Button
+                variant="contained"
+                component="a"
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                endIcon={<OpenInNewIcon />}
+                sx={{
+                  backgroundColor: primaryColor,
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  borderRadius: '30px',
+                  px: 3.5,
+                  py: 1.2,
+                  boxShadow: `0 4px 15px ${hexToRgba(primaryColor, 0.25)}`,
+                  '&:hover': {
+                    backgroundColor: '#C59B27',
+                    boxShadow: `0 6px 20px ${hexToRgba('#C59B27', 0.35)}`,
+                    transform: 'translateY(-2px)'
+                  },
+                  transition: 'all 0.3s ease'
+                }}
+              >
+                Visit Project
+              </Button>
+            </Box>
+          )}
           
           {image && (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 2 }}>
@@ -1104,6 +1135,17 @@ export default function App() {
 
   // Projects Data
   const projectsData = [
+    {
+      title: 'Nuvexa',
+      description: 'A 100% browser-based utility toolkit designed for developers, containing instant JSON formatters, URL encoders/decoders, JWT decoders, cryptographic hash generators, unit converters, and CSS styling generators.',
+      features: [
+        'Client-Side execution: All operations run locally inside the user\'s browser ensuring total data privacy.',
+        'Core Hashing & Utility Tools: Dynamic JWT decoding, JSON formatting, URL handling, and cryptographic hashing.',
+        'Fully Responsive & Instant: Built on a lightweight bundle structure that loads immediately on both mobile and desktop screens.'
+      ],
+      tech: ['React.js', 'Vite', 'Tailwind CSS'],
+      link: 'https://nuvexa-swart.vercel.app/'
+    },
     {
       title: 'Events - Registration Application',
       description: 'A flexible event registration system supporting three delegate types with secure email OTP authentication for reliable sign-ups and attendee verification.',
@@ -2340,6 +2382,7 @@ export default function App() {
                   tech={project.tech}
                   image={project.image}
                   handleOpenLightbox={handleOpenLightbox}
+                  link={project.link}
                   getTechColor={getTechColor}
                   index={idx}
                 />
