@@ -277,3 +277,24 @@ h1, h2, h3, h4, h5, h6, .navbar-brand {
     transform: translateY(0);
   }
 }
+
+/* Header Animated Wave Styles */
+@keyframes waveFlow1 {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-25%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes waveFlow2 {
+  0% { transform: translateX(-25%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(-25%); }
+}
+
+.header-wave-1 {
+  animation: waveFlow1 12s ease-in-out infinite;
+}
+
+.header-wave-2 {
+  animation: waveFlow2 8s ease-in-out infinite;
+}
