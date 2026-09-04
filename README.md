@@ -9,37 +9,43 @@
 <div align="center">
 
 ### 🌟 Hero & Interactive 3D Canvas
-![Hero Section](recent:///d5bfa76acf6ac04532479f956a9a5dd5)
+<img src="public/images/screenshots/01-hero-showcase.png" alt="Hero Section & Interactive 3D Canvas" width="100%" />
+
 *Interactive 3D particle neural mesh with real-time physics, touch & click impulse wave animations, and typography.*
 
 <br/>
 
 ### 👨‍💻 About Me & Certified Accreditations
-![About & Accreditations](recent:///ebc81a5d12bf9b888eadfe4f6a9a5d92)
+<img src="public/images/screenshots/02-about-certifications.png" alt="About Me & Certified Accreditations" width="100%" />
+
 *Professional summary, verified skill highlights, interests, and verified Udemy Python accreditation.*
 
 <br/>
 
 ### 🛠️ Technical Skills & Core Proficiencies
-![Technical Skills](recent:///d34187e6696cd3af0eba28716a9a5d92)
+<img src="public/images/screenshots/03-technical-skills.png" alt="Technical Skills & Core Proficiencies" width="100%" />
+
 *Modern 3D interactive skill cards with dynamic hover glow effects across Python, PHP, React, Next.js, and Odoo.*
 
 <br/>
 
 ### 💼 Comprehensive Professional Services
-![Services](recent:///009988f04bce92688f1fd5f16a9a5d92)
+<img src="public/images/screenshots/04-services.png" alt="Comprehensive Professional Services" width="100%" />
+
 *Full-stack engineering offerings ranging from Web & Mobile Apps to ERP Automation, DB Management, and UI/UX Design.*
 
 <br/>
 
 ### 🚀 Independent Innovations & Products
-![Independent Innovations](recent:///ba76642fb0beb4958525b4c96a9a5d92)
+<img src="public/images/screenshots/05-independent-innovations.png" alt="Independent Innovations & Products" width="100%" />
+
 *Production applications including Resume Builder, Mavora Bookvexa 3D PDF Reader, HomeWallet, and Nuvexa Developer Utilities.*
 
 <br/>
 
 ### 🏢 Enterprise Solutions & Direct Contact
-![Enterprise Solutions & Contact](recent:///94e09d2ac2447bb9e0f502f36a9a5d92)
+<img src="public/images/screenshots/06-enterprise-contact.png" alt="Enterprise Solutions & Direct Contact" width="100%" />
+
 *Corporate systems (Events, DWM, Kontact Odoo ERP, Central Kitchen POS, Canine Office) and an interactive direct contact terminal.*
 
 </div>
@@ -149,7 +155,8 @@ my_website/
 
 - 📧 **Email:** [muralip.software.engineer@gmail.com](mailto:muralip.software.engineer@gmail.com)
 - 📍 **Location:** Chennai, India
-- 💼 **Portfolio:** [Live Website](https://muralip.vercel.app/)
+- 💼 **Portfolio:** [Live Website](https://muralisoftware.vercel.app/)
+- 🌐 **Live Demo:** [https://muralisoftware.vercel.app/](https://muralisoftware.vercel.app/)
 
 ---
 
