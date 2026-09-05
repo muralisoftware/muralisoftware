@@ -138,9 +138,7 @@ export const HomePage = () => {
               fontFamily: "'Fira Code', 'Space Mono', 'Courier New', monospace",
               letterSpacing: '-0.5px',
               display: 'inline-block',
-              borderRight: '3px solid transparent',
-              pr: '8px',
-              animation: 'slideUpFade 0.8s ease-out, blink 0.75s step-end infinite',
+              animation: 'slideUpFade 0.8s ease-out',
               mx: 'auto',
               whiteSpace: 'normal',
               textAlign: 'center'

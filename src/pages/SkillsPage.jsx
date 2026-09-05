@@ -25,10 +25,10 @@ export const SkillsPage = () => {
           <Typography variant="subtitle2" sx={{ color: '#C59B27', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', mb: 1 }}>
             Expertise & Technologies
           </Typography>
-          <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#051d24' }}>
+          <Typography variant="h3" sx={{ fontWeight: 800, mb: 2, fontSize: { xs: '32px', md: '42px' }, color: '#ffffff' }}>
             Technical Skills
           </Typography>
-          <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: '650px', margin: '0 auto', fontSize: '16px' }}>
+          <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.85)', maxWidth: '650px', margin: '0 auto', fontSize: '16px' }}>
             A comprehensive toolkit of modern programming languages, frameworks, and databases that I leverage to build robust digital solutions.
           </Typography>
         </Box>
